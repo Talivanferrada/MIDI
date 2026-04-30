@@ -1,0 +1,28 @@
+{
+  "workflows": {
+    "exploration": [
+      "intake",
+      "global-research",
+      "local-adaptation",
+      "benchmark",
+      "insight",
+      "creative",
+      "hybridization"
+    ],
+    "financeable": [
+      "market",
+      "business-model",
+      "technical",
+      "financial",
+      "legal-tax",
+      "risk",
+      "validation",
+      "funding-match"
+    ]
+  },
+  "required_for_final": [
+    "devil-advocate",
+    "evaluator"
+  ],
+  "platform_specific": {}
+}

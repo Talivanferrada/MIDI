@@ -1,0 +1,19 @@
+{
+  "framework": "MIDI",
+  "framework_full_name": "Modelo Inteligente de Desarrollo de Innovación",
+  "version": "0.1.0",
+  "project_name": "",
+  "country": "",
+  "region": "",
+  "language": "es",
+  "default_mode": "full",
+  "funding_focus": true,
+  "legal_tax_country": "",
+  "risk_level": "medium",
+  "output_depth": "deep",
+  "require_sources": true,
+  "human_approval_gates": true,
+  "agent_platform": "generic",
+  "created_at": "",
+  "updated_at": ""
+}

@@ -1,0 +1,38 @@
+{
+  "dimensions": {
+    "innovation": {
+      "weight": 15,
+      "description": "Nivel de innovación y diferenciación"
+    },
+    "market": {
+      "weight": 15,
+      "description": "Tamaño y potencial del mercado"
+    },
+    "scalability": {
+      "weight": 10,
+      "description": "Capacidad de escalar"
+    },
+    "feasibility": {
+      "weight": 15,
+      "description": "Factibilidad técnica y operacional"
+    },
+    "financials": {
+      "weight": 15,
+      "description": "Viabilidad financiera"
+    },
+    "legal": {
+      "weight": 10,
+      "description": "Cumplimiento legal y tributario"
+    },
+    "narrative": {
+      "weight": 10,
+      "description": "Calidad de la narrativa"
+    },
+    "postulability": {
+      "weight": 10,
+      "description": "Capacidad de postular a fondos"
+    }
+  },
+  "passing_score": 70,
+  "evaluation_notes": ""
+}
