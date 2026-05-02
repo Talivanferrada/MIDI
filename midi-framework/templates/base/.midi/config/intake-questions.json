@@ -1,0 +1,383 @@
+{
+  "base_questions": [
+    {
+      "id": "idea",
+      "question": "¿Cuál es tu idea inicial?",
+      "section": "Idea y Objetivo",
+      "mandatory": true,
+      "validation": {
+        "min_words": 20,
+        "error_message": "Por favor describe tu idea con más detalle (mínimo 20 palabras)"
+      }
+    },
+    {
+      "id": "objetivo",
+      "question": "¿Cuál es tu objetivo principal?",
+      "section": "Idea y Objetivo",
+      "type": "multiple_choice",
+      "options": [
+        "Crear un negocio rentable",
+        "Postular a fondos concursables",
+        "Validar una hipótesis",
+        "Resolver un problema personal",
+        "Generar impacto social",
+        "Otro"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "etapa",
+      "question": "¿En qué etapa está tu idea?",
+      "section": "Idea y Objetivo",
+      "type": "multiple_choice",
+      "options": [
+        "Solo una idea vaga",
+        "Tengo un concepto definido",
+        "Ya investigué un poco",
+        "Tengo un prototipo/MVP",
+        "Ya tengo clientes/usuarios"
+      ]
+    },
+    {
+      "id": "pais",
+      "question": "¿En qué país estás?",
+      "section": "Ubicación y Contexto",
+      "default": "Chile",
+      "mandatory": true
+    },
+    {
+      "id": "region",
+      "question": "¿En qué región?",
+      "section": "Ubicación y Contexto",
+      "conditional": {
+        "if": "pais",
+        "equals": "Chile"
+      },
+      "options": [
+        "Arica y Parinacota",
+        "Tarapacá",
+        "Antofagasta",
+        "Atacama",
+        "Coquimbo",
+        "Valparaíso",
+        "Metropolitana",
+        "O'Higgins",
+        "Maule",
+        "Ñuble",
+        "Biobío",
+        "Araucanía",
+        "Los Ríos",
+        "Los Lagos",
+        "Aysén",
+        "Magallanes"
+      ]
+    },
+    {
+      "id": "publico_objetivo",
+      "question": "¿Quién es tu público objetivo?",
+      "section": "Público y Mercado",
+      "mandatory": true,
+      "sub_questions": [
+        "Edad, género, nivel socioeconómico",
+        "Profesión/ocupación",
+        "Ubicación geográfica"
+      ]
+    },
+    {
+      "id": "problema",
+      "question": "¿Qué problema les resuelves?",
+      "section": "Público y Mercado"
+    }
+  ],
+  "follow_ups": {
+    "health": {
+      "keywords": ["salud", "health", "médico", "medicina", "hospital", "clínica", "paciente", "saludable"],
+      "questions": [
+        {
+          "id": "certificacion_medica",
+          "question": "¿Tu solución requiere certificación médica?",
+          "type": "yes_no"
+        },
+        {
+          "id": "profesionales_salud",
+          "question": "¿Tienes profesionales de salud en el equipo?",
+          "type": "yes_no"
+        },
+        {
+          "id": "datos_pacientes",
+          "question": "¿La solución maneja datos de pacientes?",
+          "type": "yes_no"
+        },
+        {
+          "id": "regulaciones_salud",
+          "question": "¿Qué regulaciones conoces que aplican?"
+        }
+      ],
+      "regulatory_alert": "Proyectos de salud en Chile requieren autorización del ISP y cumplimiento de Ley de Datos Personales"
+    },
+    "education": {
+      "keywords": ["educación", "education", "colegio", "escuela", "universidad", "estudiante", "profesor", "aprendizaje", "curso"],
+      "questions": [
+        {
+          "id": "nivel_educativo",
+          "question": "¿Es para colegios, universidades, o ambos?",
+          "type": "multiple_choice",
+          "options": ["Colegios", "Universidades", "Ambos", "Otro nivel educativo"]
+        },
+        {
+          "id": "integracion_mineduc",
+          "question": "¿Requiere integración con MINEDUC?",
+          "type": "yes_no"
+        },
+        {
+          "id": "curriculum_nacional",
+          "question": "¿El contenido está alineado con el currículum nacional?",
+          "type": "yes_no"
+        },
+        {
+          "id": "profesores_equipo",
+          "question": "¿Tienes profesores en el equipo?",
+          "type": "yes_no"
+        }
+      ],
+      "regulatory_alert": "Soluciones educativas pueden requerir reconocimiento oficial del MINEDUC"
+    },
+    "food": {
+      "keywords": ["comida", "alimentos", "food", "restaurante", "cocina", "comestibles", "nutrición", "gastronomía"],
+      "questions": [
+        {
+          "id": "resolucion_sanitaria",
+          "question": "¿Requiere resolución sanitaria?",
+          "type": "yes_no"
+        },
+        {
+          "id": "manipuladores_certificados",
+          "question": "¿Tienes manipuladores de alimentos certificados?",
+          "type": "yes_no"
+        },
+        {
+          "id": "local_habilitado",
+          "question": "¿El local está habilitado para producción de alimentos?",
+          "type": "yes_no"
+        },
+        {
+          "id": "requisitos_seremi",
+          "question": "¿Conoces los requisitos de SEREMI Salud?"
+        }
+      ],
+      "regulatory_alert": "Alimentos requieren resolución sanitaria de SEREMI Salud y manipuladores certificados"
+    },
+    "tourism": {
+      "keywords": ["turismo", "tour", "viaje", "hospedaje", "hotel", "turista", "excursión", "destino"],
+      "questions": [
+        {
+          "id": "tipo_turismo",
+          "question": "¿Es para turismo nacional o internacional?",
+          "type": "multiple_choice",
+          "options": ["Nacional", "Internacional", "Ambos"]
+        },
+        {
+          "id": "inscripcion_sernatur",
+          "question": "¿Requiere inscripción en SERNATUR?",
+          "type": "yes_no"
+        },
+        {
+          "id": "infraestructura_turistica",
+          "question": "¿Tienes infraestructura turística?",
+          "type": "yes_no"
+        },
+        {
+          "id": "categoria_turistica",
+          "question": "¿Conoces la categoría turística que aplicaría?"
+        }
+      ],
+      "regulatory_alert": "Servicios turísticos pueden requerir inscripción en Registro Nacional de Turismo de SERNATUR"
+    },
+    "finance": {
+      "keywords": ["finanzas", "finance", "dinero", "banco", "inversión", "crédito", "préstamo", "fintech", "pagos"],
+      "questions": [
+        {
+          "id": "autorizacion_cmf",
+          "question": "¿Requiere autorización de la CMF?",
+          "type": "yes_no"
+        },
+        {
+          "id": "dinero_terceros",
+          "question": "¿Manejarás dinero de terceros?",
+          "type": "yes_no"
+        },
+        {
+          "id": "compliance_officer",
+          "question": "¿Tienes compliance officer?",
+          "type": "yes_no"
+        },
+        {
+          "id": "ley_fintech",
+          "question": "¿Conoces los requisitos de la Ley Fintech?"
+        }
+      ],
+      "regulatory_alert": "Servicios financieros en Chile requieren autorización de la CMF y cumplimiento de Ley Fintech"
+    },
+    "platform": {
+      "keywords": ["plataforma", "digital", "app", "aplicación", "web", "software", "tecnología", "sistema", "online"],
+      "questions": [
+        {
+          "id": "tipo_plataforma",
+          "question": "¿Es web, móvil, o ambos?",
+          "type": "multiple_choice",
+          "options": ["Web", "Móvil", "Ambos"]
+        },
+        {
+          "id": "desarrolladores_equipo",
+          "question": "¿Tienes desarrolladores en el equipo?",
+          "type": "yes_no"
+        },
+        {
+          "id": "integracion_apis",
+          "question": "¿Requiere integración con APIs externas?",
+          "type": "yes_no"
+        },
+        {
+          "id": "complejidad_tecnica",
+          "question": "¿Qué nivel de complejidad técnica estimas?",
+          "type": "multiple_choice",
+          "options": ["Baja", "Media", "Alta", "Muy alta"]
+        }
+      ],
+      "regulatory_alert": null
+    },
+    "low_budget": {
+      "keywords": ["bajo presupuesto", "sin dinero", "sin recursos", "sin capital", "limitado", "escaso"],
+      "questions": [
+        {
+          "id": "presupuesto_aproximado",
+          "question": "¿Cuánto aproximadamente? (rango)",
+          "type": "range"
+        },
+        {
+          "id": "financiamiento_externo",
+          "question": "¿Tienes acceso a financiamiento externo?",
+          "type": "yes_no"
+        },
+        {
+          "id": "mvp_simple",
+          "question": "¿Puedes empezar con un MVP muy simple?",
+          "type": "yes_no"
+        },
+        {
+          "id": "recursos_propios",
+          "question": "¿Qué recursos propios puedes aportar?"
+        }
+      ],
+      "recommendation": "Considera fondos semilla (CORFO, SERCOTEC) o Start-Up Chile para bootstrap inicial"
+    },
+    "seeking_funds": {
+      "keywords": ["fondos", "financiamiento", "capital", "inversión", "fondeo", "recursos", "CORFO", "SERECOTEC"],
+      "questions": [
+        {
+          "id": "fondos_conocidos",
+          "question": "¿Conoces CORFO, SERCOTEC, FIA?",
+          "type": "yes_no"
+        },
+        {
+          "id": "postulaciones_previas",
+          "question": "¿Has postulado antes?",
+          "type": "yes_no"
+        },
+        {
+          "id": "capital_propio",
+          "question": "¿Tienes el capital propio requerido?",
+          "type": "yes_no"
+        },
+        {
+          "id": "impacto_social_ambiental",
+          "question": "¿Tu idea tiene impacto social/ambiental?",
+          "type": "yes_no"
+        }
+      ],
+      "recommendation": "Evalúa requisitos de contraparte y preparación de pitch deck antes de postular"
+    }
+  },
+  "validation_rules": {
+    "mandatory_fields": [
+      "idea",
+      "objetivo",
+      "pais",
+      "publico_objetivo",
+      "presupuesto",
+      "nivel_riesgo"
+    ],
+    "recommended_fields": [
+      "region",
+      "habilidades",
+      "recursos",
+      "restricciones"
+    ],
+    "quality_scoring": {
+      "mandatory_weight": 70,
+      "recommended_weight": 20,
+      "follow_ups_weight": 10,
+      "minimum_score": 70
+    },
+    "min_idea_words": 20
+  },
+  "keyword_detection": {
+    "enabled": true,
+    "case_sensitive": false,
+    "match_all": false,
+    "max_follow_ups_per_category": 4,
+    "priority_order": [
+      "health",
+      "finance",
+      "food",
+      "education",
+      "tourism",
+      "platform",
+      "seeking_funds",
+      "low_budget"
+    ]
+  },
+  "closing_questions": [
+    {
+      "id": "nivel_riesgo",
+      "question": "¿Qué nivel de riesgo aceptas?",
+      "section": "Restricciones y Motivaciones",
+      "type": "multiple_choice",
+      "options": [
+        "Bajo - Prefiero seguridad, puedo invertir poco tiempo",
+        "Medio - Equilibrado entre riesgo y recompensa",
+        "Alto - Dispuesto a arriesgar mucho por alto retorno"
+      ],
+      "mandatory": true
+    },
+    {
+      "id": "horizonte_tiempo",
+      "question": "¿Cuál es tu horizonte de tiempo?",
+      "section": "Restricciones y Motivaciones"
+    },
+    {
+      "id": "innovacion",
+      "question": "¿Qué nivel de innovación buscas?",
+      "section": "Innovación e Impacto",
+      "type": "multiple_choice",
+      "options": [
+        "Radical - Quiero crear algo nuevo",
+        "Incremental - Mejorar algo existente",
+        "No es mi prioridad principal"
+      ]
+    },
+    {
+      "id": "impacto",
+      "question": "¿Qué impacto buscas generar?",
+      "section": "Innovación e Impacto",
+      "type": "multiple_choice",
+      "options": [
+        "Económico (empleo, ingresos)",
+        "Social (comunidad, grupos vulnerables)",
+        "Ambiental (sostenibilidad)",
+        "Cultural",
+        "Otro"
+      ]
+    }
+  ]
+}
