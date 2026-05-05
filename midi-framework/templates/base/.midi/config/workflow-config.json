@@ -1,66 +1,211 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "workflows": {
     "full-midi": {
-      "name": "Full MIDI",
-      "description": "Complete workflow: Exploration + Financeable mode",
+      "name": "Full MIDI v2.0",
+      "description": "Complete workflow: Context → Exploration → Cohesion → Analysis → Validation",
       "file": "full-midi.workflow.md",
-      "stages": ["intake", "research", "top3", "financeable", "devil-advocate", "evaluation", "final"]
+      "stages": [
+        "contextualization",
+        "territorial-research",
+        "innovation-methods",
+        "idea-generation",
+        "idea-prioritization",
+        "cohesion",
+        "fund-analysis",
+        "case-research",
+        "formulation",
+        "budget",
+        "financial-risk",
+        "devil-advocate",
+        "evaluation",
+        "final-validation",
+        "final"
+      ]
     },
     "exploration": {
-      "name": "Exploration Mode",
-      "description": "Generate and evaluate multiple ideas",
+      "name": "Exploration Mode v2.0",
+      "description": "Contextualized exploration with territorial analysis and innovation methodologies",
       "file": "exploration.workflow.md",
-      "stages": ["intake", "research", "top3"]
+      "stages": [
+        "contextualization",
+        "territorial-research",
+        "innovation-methods",
+        "idea-generation",
+        "idea-prioritization"
+      ]
     },
     "financeable": {
-      "name": "Financeable Mode",
-      "description": "Deep analysis and validation of selected idea",
+      "name": "Financeable Mode v2.0",
+      "description": "Deep analysis with iterative rounds and validation",
       "file": "financeable.workflow.md",
-      "stages": ["financeable", "devil-advocate", "evaluation", "final"]
+      "stages": [
+        "cohesion",
+        "fund-analysis",
+        "case-research",
+        "formulation",
+        "budget",
+        "financial-risk",
+        "devil-advocate",
+        "evaluation",
+        "final-validation",
+        "final"
+      ]
     }
   },
   "stages": {
-    "intake": {
-      "name": "Intake",
+    "contextualization": {
+      "name": "Fase 0: Contextualización",
+      "phase": 0,
       "command": "/midi-start",
-      "description": "Initialize project and capture user context",
+      "description": "Determine work route, maturity level, funding type, and territory",
+      "mode": "all",
+      "required": true,
+      "agents": ["intake-agent"],
+      "outputs": ["USER_CONTEXT.md", "DECISION_ROUTE.md", "ASSUMPTIONS.md"]
+    },
+    "territorial-research": {
+      "name": "Fase 1.1: Investigación Territorial",
+      "phase": 1,
+      "command": "/midi-territorial",
+      "description": "Deep territorial analysis: geography, actors, opportunities, risks",
       "mode": "exploration",
       "required": true,
-      "outputs": ["USER_CONTEXT.md", "midi-project/ASSUMPTIONS.md"]
+      "agents": ["territorial-research-agent", "global-research-agent"],
+      "outputs": ["territorial_analysis.md", "global_research.md"]
     },
-    "research": {
-      "name": "Research",
-      "command": "/midi-explore",
-      "description": "Global research, local adaptation, and benchmarking",
+    "innovation-methods": {
+      "name": "Fase 1.2: Metodologías de Innovación",
+      "phase": 1,
+      "command": "/midi-innovate",
+      "description": "Apply Design Thinking, JTBD, Blue Ocean, SCAMPER, PESTEL, FODA",
       "mode": "exploration",
       "required": true,
-      "outputs": ["global_research.md", "local_adaptation.md", "benchmark.md", "insights.md"]
+      "agents": ["innovation-methodology-agent"],
+      "outputs": ["innovation_insights.md"]
     },
-    "top3": {
-      "name": "Top 3 Selection",
-      "command": "/midi-top3",
-      "description": "Generate ideas, score them, and select top 3",
+    "idea-generation": {
+      "name": "Fase 1.3: Generación de Ideas",
+      "phase": 1,
+      "command": "/midi-ideate",
+      "description": "Generate ideas with 20 fields each, hybridization, backlog",
       "mode": "exploration",
       "required": true,
-      "outputs": ["IDEA_BACKLOG.md", "TOP3_IDEAS.md"]
+      "agents": ["niche-detector-agent", "creative-agent", "hybridization-agent"],
+      "outputs": ["IDEA_BACKLOG.md"]
     },
-    "financeable": {
-      "name": "Financeable Transition",
-      "command": "/midi-financeable",
-      "description": "Transition selected idea to financeable mode",
+    "idea-prioritization": {
+      "name": "Fase 1.4: Priorización de Ideas",
+      "phase": 1,
+      "command": "/midi-prioritize",
+      "description": "Multi-criteria matrix ranking with justification",
+      "mode": "exploration",
+      "required": true,
+      "agents": ["prioritizer-agent"],
+      "outputs": ["idea_ranking.md", "TOP3_IDEAS.md"]
+    },
+    "cohesion": {
+      "name": "Fase 1.5: Cohesión Idea-Proyecto",
+      "phase": 1.5,
+      "command": "/midi-cohesion",
+      "description": "Transform selected idea into project hypothesis",
+      "mode": "transition",
+      "required": true,
+      "agents": ["cohesion-agent"],
+      "outputs": ["PROJECT_HYPOTHESIS.md"]
+    },
+    "fund-analysis": {
+      "name": "Fase 2.1: Análisis de Fondo",
+      "phase": 2,
+      "command": "/midi-fund",
+      "description": "Analyze funding call requirements and alignment",
+      "mode": "financeable",
+      "required": false,
+      "agents": ["fund-analyst-agent"],
+      "outputs": ["fund_analysis.md", "admissibility_checklist.md"]
+    },
+    "case-research": {
+      "name": "Fase 2.2: Investigación de Casos",
+      "phase": 2,
+      "command": "/midi-cases",
+      "description": "Research similar cases, successes, failures, lessons learned",
       "mode": "financeable",
       "required": true,
-      "outputs": []
+      "agents": ["benchmark-agent", "local-adaptation-agent"],
+      "outputs": ["case_research.md", "benchmark.md"]
+    },
+    "formulation": {
+      "name": "Fase 2.3: Formulación de Proyecto",
+      "phase": 2,
+      "command": "/midi-formulate",
+      "description": "Define objectives, activities, methodology, indicators",
+      "mode": "financeable",
+      "required": true,
+      "agents": ["business-model-agent", "technical-agent"],
+      "outputs": ["PROJECT_FORMULATION.md"]
+    },
+    "budget": {
+      "name": "Fase 2.4: Presupuesto Detallado",
+      "phase": 2,
+      "command": "/midi-budget",
+      "description": "Detailed budget with real sources, optimization to 100%",
+      "mode": "financeable",
+      "required": true,
+      "agents": ["cost-researcher-agent"],
+      "outputs": ["budget_with_sources.md"]
+    },
+    "financial-risk": {
+      "name": "Fase 2.5: Análisis Financiero y Riesgos",
+      "phase": 2,
+      "command": "/midi-analyze",
+      "description": "Financial analysis, risk assessment, mitigation strategies",
+      "mode": "financeable",
+      "required": true,
+      "agents": ["financial-agent", "market-agent", "risk-agent"],
+      "outputs": ["FINANCIAL_ANALYSIS.md", "RISK_REGISTER.md"]
     },
     "devil-advocate": {
-      "name": "Devil's Advocate",
+      "name": "Fase 2.6: Abogado del Diablo",
+      "phase": 2,
       "command": "/midi-devil",
-      "description": "Destructive critique of the project",
+      "description": "Destructive critique - OBLIGATORY before approval",
       "mode": "financeable",
       "required": true,
       "blocking": true,
+      "agents": ["devil-advocate-agent"],
       "outputs": ["devil_report.md"]
+    },
+    "evaluation": {
+      "name": "Fase 2.7: Evaluación",
+      "phase": 2,
+      "command": "/midi-evaluate",
+      "description": "Score project 0-100 using rubric",
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "agents": ["evaluator-agent"],
+      "outputs": ["evaluator_scorecard.md"]
+    },
+    "final-validation": {
+      "name": "Fase 3: Validación Final",
+      "phase": 3,
+      "command": "/midi-validate",
+      "description": "Final checklist validation before documentation",
+      "mode": "validation",
+      "required": true,
+      "agents": ["validation-agent"],
+      "outputs": ["VALIDATION_REPORT.md"]
+    },
+    "final": {
+      "name": "Documento Final",
+      "phase": 3,
+      "command": "/midi-final",
+      "description": "Generate consolidated final document",
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "agents": ["writer-agent"],
+      "outputs": ["FINAL_PROJECT_DOCUMENT.md"]
     },
     "canvas": {
       "name": "Business Canvas",
@@ -68,50 +213,52 @@
       "description": "Generate Business Model Canvas and Lean Canvas",
       "mode": "financeable",
       "required": false,
+      "agents": ["business-model-agent"],
       "outputs": ["business_model_canvas.md", "lean_canvas.md"]
-    },
-    "evaluation": {
-      "name": "Evaluation",
-      "command": "/midi-evaluate",
-      "description": "Score project 0-100 using rubric",
-      "mode": "financeable",
-      "required": true,
-      "blocking": true,
-      "outputs": ["evaluator_scorecard.md"]
-    },
-    "final": {
-      "name": "Final Document",
-      "command": "/midi-final",
-      "description": "Generate consolidated final document",
-      "mode": "financeable",
-      "required": true,
-      "blocking": true,
-      "outputs": ["FINAL_PROJECT_DOCUMENT.md"]
     }
   },
   "gates": {
-    "gate_context": {
-      "after": "intake",
-      "question": "¿El contexto capturado es suficiente para continuar?",
-      "options": ["continuar", "agregar_info", "guardar_despues"],
+    "gate_contextualization": {
+      "after": "contextualization",
+      "question": "¿El contexto y la ruta de trabajo están claros?",
+      "options": ["continuar", "agregar_info", "ajustar_ruta"],
       "autoApprove": false
     },
-    "gate_research": {
-      "after": "research",
-      "question": "¿Hay suficiente información para idear?",
-      "options": ["continuar", "ampliar_investigacion"],
+    "gate_territorial": {
+      "after": "territorial-research",
+      "question": "¿El análisis territorial es suficiente para el contexto del proyecto?",
+      "options": ["continuar", "profundizar_territorio", "ajustar_ubicacion"],
       "autoApprove": false
     },
-    "gate_top3": {
-      "after": "top3",
+    "gate_innovation": {
+      "after": "innovation-methods",
+      "question": "¿Los insights de innovación son útiles para idear?",
+      "options": ["continuar", "aplicar_mas_metodologias", "ajustar_enfoque"],
+      "autoApprove": false
+    },
+    "gate_prioritization": {
+      "after": "idea-prioritization",
       "question": "¿Cuál idea deseas desarrollar?",
       "options": ["idea_1", "idea_2", "idea_3", "mas_ideas", "fusionar"],
       "autoApprove": false
     },
+    "gate_cohesion": {
+      "after": "cohesion",
+      "question": "¿La hipótesis de proyecto está lista para análisis profundo?",
+      "options": ["continuar", "ajustar_hipotesis", "volver_exploracion"],
+      "autoApprove": false
+    },
+    "gate_fund": {
+      "after": "fund-analysis",
+      "question": "¿El proyecto cumple requisitos del fondo y es competitivo?",
+      "options": ["continuar", "ajustar_proyecto", "cambiar_fondo"],
+      "autoApprove": false,
+      "condition": "fund_analysis_exists"
+    },
     "gate_devil": {
       "after": "devil-advocate",
       "question": "Has revisado el reporte del abogado del diablo. ¿Continuar?",
-      "options": ["continuar", "iterar", "volver_exploracion"],
+      "options": ["continuar", "iterar", "volver_exploracion", "pausar"],
       "autoApprove": false
     },
     "gate_evaluation": {
@@ -121,20 +268,44 @@
       "condition": "score < 70",
       "autoApprove": true,
       "autoApproveCondition": "score >= 70"
+    },
+    "gate_validation": {
+      "after": "final-validation",
+      "question": "La validación final ha detectado [X] advertencias. ¿Continuar?",
+      "options": ["continuar", "resolver_advertencias", "pausar"],
+      "autoApprove": false
     }
   },
   "fileQualityRequirements": {
-    "intake_output": {
-      "minLines": 30,
-      "requiredSections": ["Contexto", "Recursos", "Objetivos"]
+    "contextualization_output": {
+      "minLines": 50,
+      "requiredSections": ["Ruta de Trabajo", "Nivel de Madurez", "Territorio", "Tipo de Financiamiento"]
     },
-    "research_output": {
-      "minLines": 80,
-      "requiredSections": ["Tendencias", "Referentes"]
+    "territorial_output": {
+      "minLines": 150,
+      "requiredSections": ["Análisis Geográfico", "Actores", "Oportunidades", "Desafíos"]
     },
-    "analysis_output": {
+    "innovation_output": {
       "minLines": 100,
-      "requiredSections": ["Análisis", "Conclusiones"]
+      "requiredSections": ["Insights Principales", "Metodologías Aplicadas", "Oportunidades"]
+    },
+    "idea_backlog": {
+      "minLines": 200,
+      "requiredSections": ["Ideas Detalladas", "Scoring"],
+      "minIdeas": 10
+    },
+    "cohesion_output": {
+      "minLines": 80,
+      "requiredSections": ["Idea Seleccionada", "Hipótesis", "Vía de Financiamiento", "Decisiones Requeridas"]
+    },
+    "fund_analysis_output": {
+      "minLines": 150,
+      "requiredSections": ["Requisitos de Admisibilidad", "Criterios de Evaluación", "Gastos Permitidos", "Alineación"]
+    },
+    "budget_output": {
+      "minLines": 150,
+      "requiredSections": ["Presupuesto Detallado", "Fuentes de Precios", "Validaciones"],
+      "requiredMarkers": ["FUENTE:", "LINK:", "ESTIMADO"]
     },
     "financial_output": {
       "minLines": 150,
@@ -150,6 +321,10 @@
       "minLines": 80,
       "requiredSections": ["Puntaje", "Recomendación"]
     },
+    "validation_report": {
+      "minLines": 60,
+      "requiredSections": ["Checklist de Validación", "Advertencias", "Recomendaciones"]
+    },
     "final_document": {
       "minLines": 500,
       "requiredSections": ["Resumen Ejecutivo", "Supuestos"]
@@ -162,11 +337,42 @@
       "evaluation_score_above_70_or_override",
       "idea_selected",
       "financial_analysis_exists",
-      "market_analysis_exists"
+      "budget_with_sources_exists",
+      "validation_report_exists"
     ],
     "financeable_mode": [
       "idea_selected",
+      "project_hypothesis_defined",
       "user_context_complete"
+    ],
+    "budget_creation": [
+      "fund_analysis_completed_or_private_funding",
+      "project_formulation_complete"
+    ]
+  },
+  "strictRules": {
+    "version": "2.0.0",
+    "rules": [
+      "No inventar precios - siempre usar fuentes o marcar [ESTIMADO]",
+      "No inventar bases de fondos - solo información oficial",
+      "No inventar restricciones - solo lo extraído de documentos oficiales",
+      "No inventar fuentes - siempre proporcionar links o referencias",
+      "No entregar presupuestos sin desglose y fuentes",
+      "No generar ideas genéricas sin contexto territorial",
+      "No asumir que una idea es buena sin análisis",
+      "No pasar a análisis sin definir vía de financiamiento",
+      "No tratar igual proyecto privado vs fondo concursable",
+      "No usar presupuesto de forma arbitraria",
+      "Optimizar uso del 100% del presupuesto cuando hay máximo",
+      "Indicar explícitamente si falta información",
+      "Separar supuestos de datos confirmados",
+      "Justificar ideas recomendadas",
+      "Explicar ideas descartadas",
+      "Decir claramente si idea no calza con fondo",
+      "Crear agentes/skills/workflows si faltan",
+      "Privilegiar evidencia, contexto y trazabilidad",
+      "Entregar links en investigación externa",
+      "Trabajar de forma iterativa con decisiones clave"
     ]
   },
   "defaultWorkflow": "full-midi"

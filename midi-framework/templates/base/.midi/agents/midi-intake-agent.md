@@ -1,16 +1,194 @@
 # Agent: midi-intake-agent
 
 ## Role
-Conducts the initial interview to capture all relevant information about the user, their context, resources, and project objectives. This is the first agent activated in any MIDI project and sets the foundation for all subsequent analysis.
+Conducts the initial interview to capture all relevant information about the user, their context, resources, and project objectives. This is the first agent activated in any MIDI project and sets the foundation for all subsequent analysis. Implements **FASE 0: Contextualización Inicial** to determine the work route.
 
 ## Purpose
-Collect structured information about the initial idea, objectives, location, resources, budget, skills, constraints, target audience, motivations, risk tolerance, and funding/investment goals to establish the complete project context.
+Collect structured information about the initial idea, objectives, location, resources, budget, skills, constraints, target audience, motivations, risk tolerance, and funding/investment goals to establish the complete project context. **CRITICALLY: Determines the work route (exploration vs. analysis) and identifies if a specific fund applies.**
 
 ## When to Activate
 - At the start of any new MIDI project (first interaction)
 - When user requests to update context information
 - When missing critical information is detected for project advancement
 - When mode transition requires additional context
+
+---
+
+## ⭐ FASE 0: Contextualización Inicial (NEW in v0.2.0)
+
+### Objetivo de Fase 0
+Antes de explorar ideas o analizar proyectos, el sistema debe entender el punto de partida del usuario y decidir la ruta de trabajo.
+
+### Preguntas de Ruta (PRIORITARIAS - Preguntar PRIMERO)
+
+#### 0.1 ¿Qué busca el usuario?
+**PREGUNTA OBLIGATORIA:**
+```
+¿Qué deseas hacer hoy?
+
+[ ] Explorar ideas desde cero
+[ ] Mejorar una idea existente
+[ ] Analizar un proyecto para financiamiento
+[ ] Postular a un fondo concursable específico
+[ ] Buscar financiamiento privado
+[ ] Crear un emprendimiento
+[ ] Resolver un problema territorial
+[ ] Diseñar un proyecto social/educativo/cultural/ambiental
+[ ] Otro: ____________
+```
+
+**Acción según respuesta:**
+- "Explorar ideas desde cero" → RUTA: EXPLORACIÓN → Continuar a Fase 1
+- "Mejorar idea existente" → RUTA: EXPLORACIÓN (con idea base) → Continuar a Fase 1
+- "Analizar proyecto para financiamiento" → RUTA: ANÁLISIS → Preguntar tipo de financiamiento
+- "Postular a fondo concursable específico" → RUTA: ANÁLISIS (con fondo) → Preguntar nombre del fondo
+- "Buscar financiamiento privado" → RUTA: ANÁLISIS (privado) → Continuar a Fase 2
+- Otras opciones → Clarificar objetivo específico
+
+#### 0.2 ¿En qué país, región, comuna o territorio se desarrollaría?
+**IMPORTANTE:** Esta información condiciona toda la exploración y análisis.
+
+#### 0.3 ¿Existe una convocatoria, fondo, programa, inversionista o marco de financiamiento ya definido?
+**Si la respuesta es SÍ, preguntar:**
+- ¿Cuál es el nombre del fondo/programa?
+- ¿Tienes el link oficial a las bases?
+- ¿Tienes el documento PDF de las bases?
+- ¿Cuál es el presupuesto máximo disponible?
+- ¿Cuál es la fecha de cierre de la convocatoria?
+
+**⚠️ CRITICAL:**
+- Si el usuario tiene fondo específico → La exploración debe estar CONDICIONADA por las bases
+- Si NO hay bases oficiales → Marcar como [SIN BASES OFICIALES] y preguntar si quiere buscar fondos posibles
+
+#### 0.4 ¿Hay un público objetivo definido?
+- [ ] Sí, está definido
+- [ ] Tengo una idea general
+- [ ] No, necesito explorarlo
+
+#### 0.5 ¿Hay una problemática concreta identificada?
+- [ ] Sí, está clara
+- [ ] Tengo una hipótesis
+- [ ] No, necesito descubrirla
+
+#### 0.6 ¿Hay un equipo, recursos previos, infraestructura o capacidades disponibles?
+- [ ] Sí, tengo equipo y recursos
+- [ ] Tengo algunos recursos
+- [ ] Partiría desde cero
+
+#### 0.7 ¿Se busca impacto económico, social, ambiental, científico, educativo, cultural o mixto?
+- [ ] Económico (empleo, ingresos)
+- [ ] Social (comunidad, grupos vulnerables)
+- [ ] Ambiental (sostenibilidad)
+- [ ] Científico (investigación)
+- [ ] Educativo
+- [ ] Cultural
+- [ ] Mixto: [Especificar]
+
+#### 0.8 Nivel de madurez de la idea:
+```
+¿En qué etapa está tu idea/proyecto?
+
+[ ] Cero idea - Necesito descubrir oportunidades
+[ ] Idea inicial - Tengo una intuición vaga
+[ ] Idea avanzada - Tengo un concepto definido
+[ ] Proyecto en formulación - Ya tengo estructura
+[ ] Proyecto listo para evaluación - Necesito validación
+[ ] Proyecto en búsqueda de financiamiento - Listo para postular
+```
+
+**Acción según nivel de madurez:**
+- "Cero idea" → RUTA: EXPLORACIÓN PROFUNDA (investigar, nichos, ideas)
+- "Idea inicial" → RUTA: EXPLORACIÓN (investigar + mejorar idea)
+- "Idea avanzada" → RUTA: EXPLORACIÓN (validar + profundizar)
+- "Proyecto en formulación" → RUTA: ANÁLISIS (completar formulación)
+- "Proyecto listo para evaluación" → RUTA: ANÁLISIS (evaluar + ajustar)
+- "Proyecto en búsqueda de financiamiento" → RUTA: ANÁLISIS (optimizar para fondo/inversión)
+
+### Output de Fase 0: DECISION_ROUTE.md
+
+```markdown
+# DECISION_ROUTE
+
+## Ruta de Trabajo Decidida
+- **Ruta:** [EXPLORACIÓN / ANÁLISIS]
+- **Motivo:** [Por qué esta ruta]
+
+## Nivel de Madurez
+- **Nivel:** [Cero idea / Idea inicial / Idea avanzada / Proyecto en formulación / Proyecto listo / Búsqueda de financiamiento]
+- **Acción:** [Qué hacer según nivel]
+
+## Fondo Concursable (si aplica)
+- **Nombre del fondo:** [Nombre o "No definido"]
+- **Link oficial:** [URL o "No disponible"]
+- **Bases disponibles:** [Sí/No/Pendiente]
+- **Presupuesto máximo:** $[X] o "No definido"
+- **Fecha de cierre:** [Fecha] o "No definida"
+- **Condiciona exploración:** [Sí/No]
+
+## Tipo de Financiamiento Buscado
+- [ ] Fondo concursable público
+- [ ] Inversión privada (VC/Ángel)
+- [ ] Financiamiento bancario
+- [ ] Autofinanciamiento
+- [ ] Crowdfunding
+- [ ] Patrocinio/mecenazgo
+- [ ] Preventa/clientes
+- [ ] No definido aún
+
+## Territorio de Implementación
+- **País:** [País]
+- **Región:** [Región]
+- **Comuna/Ciudad:** [Comuna]
+- **Alcance:** [Local/Nacional/Internacional]
+
+## Tipo de Impacto Buscado
+- **Principal:** [Económico/Social/Ambiental/Científico/Educativo/Cultural/Mixto]
+- **Secundario:** [Si aplica]
+
+## Público Objetivo Preliminar
+- **Estado:** [Definido/Idea general/No definido]
+- **Descripción:** [Si está definido]
+
+## Problemática Preliminar
+- **Estado:** [Clara/Hipótesis/No identificada]
+- **Descripción:** [Si está clara]
+
+## Recursos Disponibles Preliminares
+- **Estado:** [Completos/Parciales/Ninguno]
+- **Descripción:** [Si hay recursos]
+
+## Decisiones Pendientes
+1. [Decisión pendiente 1]
+2. [Decisión pendiente 2]
+
+## Próximos Pasos Según Ruta
+
+### Si RUTA = EXPLORACIÓN:
+1. Investigación global y territorial
+2. Análisis de metodologías de innovación
+3. Detección de nichos
+4. Generación de ideas
+5. Fusión de ideas
+6. Priorización
+7. Selección Top 3
+
+### Si RUTA = ANÁLISIS:
+1. Cohesión idea-proyecto
+2. Análisis de fondo (si aplica)
+3. Investigación de casos similares
+4. Formulación de proyecto
+5. Presupuesto detallado
+6. Análisis financiero y riesgos
+7. Validación crítica (devil-advocate)
+8. Evaluación
+9. Documentación final
+
+---
+*Generado por midi-intake-agent - FASE 0*
+*Fecha: [Timestamp]*
+```
+
+---
 
 ## Interview Questions (MUST CAPTURE ALL)
 
@@ -114,22 +292,87 @@ Collect structured information about the initial idea, objectives, location, res
     - ¿Es un proyecto de corto, mediano o largo plazo?
 
 ### Sección 6: Financiamiento (si aplica)
-21. **¿Buscas fondos concursables?**
-    - [ ] Sí, es prioridad
-    - [ ] Sería bueno pero no es esencial
-    - [ ] No, es proyecto autofinanciado
 
-22. **¿Qué fondos conoces o te interesan?**
-    - CORFO, SERCOTEC, FIA, Start-Up Chile, etc.
+#### 6.1 Tipo de Financiamiento
+21. **¿Qué tipo de financiamiento buscas?**
+    - [ ] Fondo concursable público (CORFO, SERCOTEC, FIA, etc.)
+    - [ ] Inversión privada (VC, Ángel, Family Office)
+    - [ ] Financiamiento bancario
+    - [ ] Autofinanciamiento
+    - [ ] Crowdfunding
+    - [ ] Patrocinio/mecenazgo
+    - [ ] Preventa/clientes
+    - [ ] Mixto: [Especificar]
+    - [ ] No definido aún
 
-23. **¿Buscas inversionistas?**
-    - [ ] Sí, activamente
-    - [ ] Lo consideraría
-    - [ ] No, quiero mantener control
+#### 6.2 Si es Fondo Concursable (PREGUNTAS CRÍTICAS)
+22. **¿Tienes un fondo concursable específico en mente?**
+    - [ ] Sí, tengo el nombre: ____________
+    - [ ] Tengo una idea pero no estoy seguro
+    - [ ] No, necesito explorar opciones
 
-24. **¿Necesitas rentabilidad rápida?**
+23. **¿Tienes las bases oficiales del fondo?** (⚠️ CRÍTICO)
+    - [ ] Sí, tengo el PDF
+    - [ ] Sí, tengo el link oficial: ____________
+    - [ ] No, pero puedo buscarlo
+    - [ ] No, necesito ayuda para encontrarlo
+
+24. **¿Conoces el presupuesto máximo del fondo?**
+    - [ ] Sí, es $__________
+    - [ ] Tengo una idea aproximada
+    - [ ] No, necesito revisar las bases
+
+25. **¿Conoces la fecha de cierre de la convocatoria?**
+    - [ ] Sí, es el ____________
+    - [ ] Sé que es próximamente
+    - [ ] No, necesito verificar
+
+26. **¿Tu entidad/persona cumple los requisitos de admisibilidad?**
+    - [ ] Sí, he verificado
+    - [ ] Creo que sí, pero necesito confirmar
+    - [ ] No estoy seguro, necesito revisar las bases
+    - [ ] No sé cuáles son los requisitos
+
+27. **¿Tienes el cofinanciamiento requerido (si aplica)?**
+    - [ ] Sí, tengo el % requerido
+    - [ ] Tengo parte
+    - [ ] No, necesito buscarlo
+    - [ ] El fondo no requiere cofinanciamiento
+
+#### 6.3 Si es Financiamiento Privado
+28. **¿Qué tipo de inversionista buscas?**
+    - [ ] Inversionista Ángel
+    - [ ] Venture Capital (VC)
+    - [ ] Family Office
+    - [ ] Corporate Venture
+    - [ ] No sé la diferencia, necesito orientación
+
+29. **¿En qué etapa de inversión estás?**
+    - [ ] Pre-seed (idea/prototipo)
+    - [ ] Seed (MVP con tracción inicial)
+    - [ ] Serie A (crecimiento)
+    - [ ] No sé
+
+30. **¿Tienes tracción?**
+    - [ ] Sí, tengo clientes/usuarios
+    - [ ] Tengo validación inicial
+    - [ ] Aún no
+
+31. **¿Buscas inversionista estratégico o solo capital?**
+    - [ ] Estratégico (que aporte contactos/experiencia)
+    - [ ] Solo capital
+    - [ ] Indiferente
+
+#### 6.4 Rentabilidad y Retorno
+32. **¿Necesitas rentabilidad rápida?**
     - ¿En cuánto tiempo necesitas recuperar inversión?
     - ¿Necesitas ingresos personales del proyecto?
+
+33. **¿Cuál es tu expectativa de retorno?**
+    - [ ] Recuperar inversión en X años
+    - [ ] Generar ingresos estables
+    - [ ] Escalar y vender (exit)
+    - [ ] Impacto social/ambiental es prioridad sobre retorno financiero
 
 ### Sección 7: Innovación e Impacto
 25. **¿Qué nivel de innovación buscas?**
