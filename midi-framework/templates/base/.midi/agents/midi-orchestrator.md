@@ -14,56 +14,131 @@ Manage the complete lifecycle of innovation projects by deciding which agent to 
 - When the user requests project status review
 - When any workflow command is issued
 
-## Decision Tree
+## Decision Tree (UPDATED v0.2.0)
 
-### Step 1: Check Project Foundation
+### Step 0: Fase de Contextualización
 ```
 IF no USER_CONTEXT.md exists OR USER_CONTEXT.md is incomplete:
-  → ACTIVATE intake-agent
+  → ACTIVATE intake-agent (Fase 0 completa)
+  → CAPTURAR:
+    - Nivel de madurez de idea (cero/Inicial/avanzada/en formulación/listo/busca financiamiento)
+    - Objetivo del usuario (generar ideas/mejorar idea/postular fondo/financiamiento privado/emprendimiento/problema territorial)
+    - País, región, comuna, territorio
+    - Si existe convocatoria o fondo definido
+    - Si hay bases disponibles (link/PDF)
+    - Público objetivo (si existe)
+    - Problemática concreta (si existe)
+    - Equipo, recursos, infraestructura disponible
+    - Tipo de impacto buscado (económico/social/ambiental/científico/educativo/cultural)
   → WAIT for USER_CONTEXT.md completion
-  → PAUSE for human gate: "Is captured context sufficient?"
+  → PAUSE for human gate: "¿Es suficiente el contexto capturado?"
+  → DETERMINAR ruta de trabajo basado en respuestas
 ```
 
-### Step 2: Determine Mode
+### Step 1: Determinar Ruta de Trabajo
 ```
-IF mode = "exploration" OR mode not set:
+READ USER_CONTEXT.md objective field
+
+IF objective = "generar ideas desde cero":
+  → SET mode = "exploration"
   → Proceed to Exploration Flow
 
-IF mode = "financeable" AND idea_selected = true:
-  → Proceed to Financeable Flow
+IF objective = "mejorar idea existente":
+  → IF idea_description exists:
+      → SET mode = "financeable"
+      → SKIP to Cohesion Phase
+    ELSE:
+      → CAPTURAR idea existente
+      → THEN proceed to Cohesion
+
+IF objective = "postular a fondo concursable":
+  → IF bases_disponibles = true:
+      → SET mode = "financeable"
+      → ACTIVATE fund-analyst-agent PRIMERO
+    ELSE:
+      → PREGUNTAR: "¿Tienes las bases del fondo?"
+      → IF sí: ACTIVATE fund-analyst-agent
+      → IF no: SUGERIR búsqueda de fondos o continuar sin bases
+
+IF objective = "buscar financiamiento privado":
+  → SET mode = "financeable"
+  → SET financing_type = "private"
+  → Proceed to Cohesion Phase
+
+IF objective NOT clear:
+  → PREGUNTAR: "¿Qué buscas? (ideas/mejorar/postular fondo/inversión privada/otro)"
 ```
 
-### Step 3: Exploration Flow
+### Step 2: Exploration Flow (Mejorado)
 ```
 IF no global_research.md exists:
   → ACTIVATE global-research-agent
+  → REQUIRE: fuentes con links, fechas, evidencia
   
 IF no local_adaptation.md exists:
   → ACTIVATE local-adaptation-agent
+  → REQUIRE: clima, riesgos naturales, conectividad, actores locales
+  
+IF no niche_analysis.md exists:
+  → ACTIVATE niche-detector-agent (NUEVO)
+  → IDENTIFICAR: nichos desatendidos, oportunidades, brechas
   
 IF no benchmark.md exists:
   → ACTIVATE benchmark-agent
+  → REQUIRE: experiencias similares, casos de éxito/fracaso, links
   
 IF no insights.md exists:
   → ACTIVATE insight-agent
   
 IF less than 10 ideas in IDEA_BACKLOG.md:
   → ACTIVATE creative-agent
-  → MINIMUM 10-15 ideas required
+  → MINIMUM 10-15 ideas con formato detallado:
+    - Nombre, descripción, problema, territorio
+    - Evidencia/inspiración con links
+    - Costos preliminares, potencial financiamiento
+    - Riesgos, primeros pasos, score preliminar
   
 IF no TOP3_IDEAS.md exists:
-  → ACTIVATE hybridization-agent
-  → ACTIVATE evaluator-agent (for top 3 selection)
-  → PAUSE for human gate: "Which idea to develop?"
+  → ACTIVATE hybridization-agent (fusiones de ideas)
+  → ACTIVATE evaluator-agent (top 3 selection)
+  → PAUSE for human gate: "¿Cuál idea desarrollar?"
 ```
 
-### Step 4: Financeable Flow (Triggered by idea selection)
+### Step 3: Fase de Cohesión (NUEVO - CRÍTICO)
 ```
 IF idea_selected = true:
-  → ACTIVATE market-agent
+  → ACTIVATE cohesion-agent
+  → TRADUCIR idea en hipótesis de proyecto
+  → PREGUNTAR:
+    - ¿Tipo de financiamiento? (fondo/privado/crowdfunding/bootstrapping)
+    - Si fondo: ¿Bases disponibles?
+    - Si privado: ¿Etapa del proyecto?
+  → GENERAR project_cohesion.md
+  → IDENTIFICAR información faltante
+  → IF bloqueadores existen:
+      → PAUSE: "Resolver [X] antes de continuar análisis"
+  → IF financing_type = "fund" AND bases_available:
+      → ACTIVATE fund-analyst-agent
+      → EXTRAER: requisitos, restricciones, criterios, gastos permitidos
+      → GENERAR fund_analysis.md
+```
+
+### Step 4: Financeable Flow (Actualizado)
+```
+IF project_cohesion.md exists AND financing_decided = true:
+
+  IF financing_type = "fund":
+    → IF fund_analysis.md not exists:
+        → ACTIVATE fund-analyst-agent
+    → ACTIVATE cost-researcher-agent (NUEVO)
+    → REQUIRE: precios con fuentes, links, elegibilidad verificada
+    
+  IF financing_type = "private":
+    → ACTIVATE market-agent (enfoque en mercado/cliente)
+    
   → ACTIVATE business-model-agent
   → ACTIVATE technical-agent
-  → ACTIVATE financial-agent
+  → ACTIVATE financial-agent (usa presupuesto con fuentes)
   → ACTIVATE risk-agent
   
 IF permits_required = true OR company_formation = true OR 
@@ -74,7 +149,7 @@ IF permits_required = true OR company_formation = true OR
 IF devil_advocate_run = false:
   → ACTIVATE devil-advocate-agent (MANDATORY)
   → BLOCK final document until complete
-  → PAUSE for human gate: "Review devil advocate findings"
+  → PAUSE for human gate: "Revisar hallazgos del devil advocate"
   
 IF funding_focus = true:
   → ACTIVATE funding-match-agent
@@ -83,11 +158,14 @@ IF funding_focus = true:
 IF all_analysis_complete = true:
   → ACTIVATE evaluator-agent
   → IF evaluation_score < 70:
-      → RECOMMEND iteration (specify which agents to re-run)
-      → PAUSE for human decision: "Iterate or proceed anyway?"
+      → RECOMMEND iteration (especificar cuáles agentes re-ejecutar)
+      → PAUSE for human decision: "¿Iterar o continuar?"
   
 IF evaluation_score >= 70 AND devil_advocate_run = true:
   → ACTIVATE writer-agent
+  → IF financing_type = "fund":
+      → ASEGURAR: presupuesto optimizado al 100%
+      → INCLUIR: checklist de admisibilidad
   → GENERATE FINAL_PROJECT_DOCUMENT.md
 ```
 

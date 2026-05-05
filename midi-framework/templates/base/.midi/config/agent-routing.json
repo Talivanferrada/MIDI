@@ -5,6 +5,7 @@
         "intake",
         "global-research",
         "local-adaptation",
+        "niche-detector",
         "benchmark",
         "insight",
         "creative",
@@ -15,6 +16,7 @@
         "USER_CONTEXT.md",
         "global_research.md",
         "local_adaptation.md",
+        "niche_analysis.md",
         "benchmark.md",
         "insights.md",
         "IDEA_BACKLOG.md",
@@ -37,11 +39,15 @@
       "completion_criteria": {
         "min_ideas": 10,
         "top3_selected": true,
-        "all_research_complete": true
+        "all_research_complete": true,
+        "niches_identified": true
       }
     },
     "financeable": {
       "sequence": [
+        "cohesion",
+        "fund-analyst",
+        "cost-researcher",
         "market",
         "business-model",
         "technical",
@@ -56,6 +62,9 @@
         "writer"
       ],
       "required_outputs": [
+        "project_cohesion.md",
+        "fund_analysis.md",
+        "budget_with_sources.md",
         "market_analysis.md",
         "bmc.md",
         "lean_canvas.md",
@@ -69,6 +78,19 @@
         "FINAL_PROJECT_DOCUMENT.md"
       ],
       "human_gates": [
+        {
+          "id": "gate_cohesion",
+          "after": "cohesion",
+          "question": "Has definido el tipo de financiamiento. ¿Continuar con el análisis?",
+          "options": ["continuar", "cambiar_financiamiento", "volver_exploracion"]
+        },
+        {
+          "id": "gate_fund_analysis",
+          "after": "fund-analyst",
+          "question": "Has revisado el análisis del fondo. ¿Continuar?",
+          "options": ["continuar", "ajustar_proyecto", "cambiar_fondo"],
+          "condition": "financing_type == 'fund'"
+        },
         {
           "id": "gate_devil",
           "after": "devil-advocate",
@@ -88,9 +110,19 @@
         "no_financial_analysis",
         "no_evaluation",
         "evaluation_below_70_without_override",
-        "no_idea_selected"
+        "no_idea_selected",
+        "no_cohesion_complete",
+        "financing_type_not_defined"
       ],
       "optional_agents": [
+        {
+          "agent": "fund-analyst",
+          "trigger": "financing_type == 'fund'"
+        },
+        {
+          "agent": "cost-researcher",
+          "trigger": "financing_type == 'fund' OR budget_needed == true"
+        },
         {
           "agent": "legal-tax",
           "trigger": "permits_or_company_or_health_or_food_or_data_or_tourism_or_finance"
@@ -112,53 +144,85 @@
       "priority": 1,
       "required": true,
       "blocking": true,
-      "description": "Captures user context and creates USER_CONTEXT.md"
+      "description": "Captures user context and creates USER_CONTEXT.md (Fase 0)"
     },
     "global-research": {
       "trigger": "no_global_research",
       "priority": 2,
       "required": true,
       "blocking": false,
-      "description": "Researches international trends and references"
+      "description": "Researches international trends and references WITH SOURCES"
     },
     "local-adaptation": {
       "trigger": "no_local_adaptation",
       "priority": 3,
       "required": true,
       "blocking": false,
-      "description": "Adapts findings to Chilean context"
+      "description": "Adapts findings to Chilean context with territorial analysis"
     },
-    "benchmark": {
-      "trigger": "no_benchmark",
+    "niche-detector": {
+      "trigger": "no_niche_analysis",
       "priority": 4,
       "required": true,
       "blocking": false,
-      "description": "Analyzes competitors and substitutes"
+      "description": "Detects niches, micronichos, and unattended opportunities"
+    },
+    "benchmark": {
+      "trigger": "no_benchmark",
+      "priority": 5,
+      "required": true,
+      "blocking": false,
+      "description": "Analyzes competitors and similar experiences WITH LINKS"
     },
     "insight": {
       "trigger": "no_insights",
-      "priority": 5,
+      "priority": 6,
       "required": true,
       "blocking": false,
       "description": "Transforms research into opportunities"
     },
     "creative": {
       "trigger": "insufficient_ideas",
-      "priority": 6,
+      "priority": 7,
       "required": true,
       "blocking": true,
       "min_ideas": 10,
-      "description": "Generates 10-15 ideas using innovation frameworks"
+      "description": "Generates 10-15 detailed ideas with territory, evidence, costs, links"
     },
     "hybridization": {
       "trigger": "ideas_need_fusion",
-      "priority": 7,
+      "priority": 8,
       "required": false,
       "description": "Fuses ideas according to combination rules"
     },
-    "market": {
+    "cohesion": {
       "trigger": "idea_selected",
+      "priority": 0,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "description": "Translates idea into project hypothesis, asks financing decisions"
+    },
+    "fund-analyst": {
+      "trigger": "financing_type_fund",
       "priority": 1,
+      "mode": "financeable",
+      "required": "conditional",
+      "condition": "financing_type === 'fund'",
+      "blocking": true,
+      "description": "Analyzes fund bases, extracts requirements, verifies eligibility"
+    },
+    "cost-researcher": {
+      "trigger": "fund_analysis_complete OR budget_needed",
+      "priority": 2,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "description": "Searches real prices with sources, builds budget with evidence"
+    },
+    "market": {
+      "trigger": "cohesion_complete",
+      "priority": 3,
       "mode": "financeable",
       "required": true,
       "description": "Analyzes market segments and sizing"
