@@ -1,0 +1,29 @@
+{
+  "project": {
+    "name": "",
+    "created": "2026-05-01T14:29:12.634Z",
+    "updated": "2026-05-01T14:29:44.968Z"
+  },
+  "workflow": {
+    "currentMode": null,
+    "currentStage": "start",
+    "completedStages": [],
+    "stageHistory": [],
+    "gates": {},
+    "overrides": {}
+  },
+  "ideas": {
+    "selected": null,
+    "top3": [],
+    "backlog": []
+  },
+  "evaluation": {
+    "score": null,
+    "passed": false
+  },
+  "metadata": {
+    "iterations": 0,
+    "lastCommand": null,
+    "startedAt": null
+  }
+}

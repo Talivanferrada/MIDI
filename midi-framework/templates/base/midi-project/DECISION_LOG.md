@@ -1,36 +1,96 @@
-# DECISION LOG
+# Decision Log
 
-## Format
-Cada decisión debe registrar:
-- Fecha
-- Decisión
-- Agente responsable
-- Motivo
-- Alternativas descartadas
-- Supuestos
-- Impacto
+**Proyecto:** [nombre]
+**Creado:** [fecha]
+**Última actualización:** [fecha]
 
 ---
 
-## Decisiones
+## Resumen de Iteraciones
 
-### [Fecha]
-**Decisión:** [descripción de la decisión]
+| # | Fecha | Decisión | Agente | Resultado | Estado |
+|---|-------|----------|--------|-----------|--------|
+| 1 | [fecha] | [decisión] | [agente] | [resultado] | [estado] |
 
+---
+
+## Detalle de Decisiones
+
+### Iteración 1: [Título]
+
+**Fecha:** [fecha hora]
 **Agente:** [nombre del agente]
+**Etapa:** [exploración/financiable]
 
-**Motivo:** [razón principal]
+#### Contexto
+[Qué situación generó esta decisión]
 
-**Alternativas descartadas:**
-- [alternativa 1]: [razón para descartar]
-- [alternativa 2]: [razón para descartar]
+#### Alternativas Consideradas
+1. **Alternativa A:** [descripción]
+   - Pros: [ventajas]
+   - Contras: [desventajas]
+   
+2. **Alternativa B:** [descripción]
+   - Pros: [ventajas]
+   - Contras: [desventajas]
 
-**Supuestos:**
+#### Decisión Tomada
+**Selección:** [Alternativa elegida]
+
+**Justificación:**
+[Por qué se eligió esta alternativa]
+
+#### Supuestos
 - [supuesto 1]
 - [supuesto 2]
 
-**Impacto:** [consecuencias de la decisión]
+#### Impacto
+- [impacto en el proyecto]
+
+#### Estado
+- [ ] Implementada
+- [ ] Pendiente
+- [ ] Revertida
+
+#### Follow-up Required
+- [ ] Validar supuesto X
+- [ ] Revisitar si condición Y ocurre
 
 ---
 
-_[Registrar cada decisión importante del proyecto]_
+### Iteración 2: [Título]
+[Repetir estructura]
+
+---
+
+## Patrones Detectados
+
+### Patrones de Decisión
+[Análisis de patrones en las decisiones tomadas]
+
+### Sesgos Identificados
+[Sesgos potenciales en el proceso de decisión]
+
+### Lecciones Aprendidas
+[Qué funcionó y qué no]
+
+---
+
+## Métricas de Iteración
+
+| Métrica | Valor |
+|---------|-------|
+| Total iteraciones | X |
+| Decisiones por etapa exploración | X |
+| Decisiones por etapa financiable | X |
+| Decisiones revertidas | X |
+| Tiempo promedio por iteración | X min |
+| Ideas descartadas | X |
+| Ideas mejoradas | X |
+
+---
+
+## Próximas Decisiones Pendientes
+
+- [ ] [Decisión pendiente 1]
+- [ ] [Decisión pendiente 2]

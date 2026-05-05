@@ -355,10 +355,113 @@ IF checklist < 80%:
 
 ---
 
-## Current Implementation Status
-- [x] Scoring system documented (13 dimensions)
-- [x] Thresholds defined
-- [x] Output format with full scorecard
-- [x] Strength/weakness framework
-- [x] Recommendation options
-- [x] Investor-specific evaluation dimension
+## Iteration Recording
+
+After each evaluation, record in DECISION_LOG.md:
+
+```markdown
+### Iteración N: Evaluation Score
+
+**Fecha:** [timestamp]
+**Agente:** evaluator-agent
+**Puntaje:** X/100
+
+#### Contexto
+Evaluación objetiva del proyecto simulando jurado/inversionista.
+
+#### Puntaje por Dimensión
+| Dimensión | Puntaje | Comentario |
+|-----------|---------|------------|
+| Problema | X/100 | [comentario breve] |
+| Solución | X/100 | [comentario breve] |
+| Innovación | X/100 | [comentario breve] |
+| Mercado | X/100 | [comentario breve] |
+| Modelo de Negocio | X/100 | [comentario breve] |
+| Factibilidad Técnica | X/100 | [comentario breve] |
+| Factibilidad Financiera | X/100 | [comentario breve] |
+| Legal/Tributario | X/100 | [comentario breve] |
+| Impacto | X/100 | [comentario breve] |
+| Escalabilidad | X/100 | [comentario breve] |
+| Equipo/Encaje | X/100 | [comentario breve] |
+| Narrativa | X/100 | [comentario breve] |
+| Postulabilidad | X/100 | [comentario breve] |
+
+#### Alternativas Consideradas
+1. **POSTULAR:** Score ≥85, listo para fondos
+   - Pros: Proyecto robusto, postulable
+   - Contras: Monitorear riesgos pendientes
+
+2. **ITERAR:** Score 55-84, mejoras necesarias
+   - Pros: Potencial identificado
+   - Contras: Requiere trabajo adicional
+
+3. **NO APROBAR:** Score <55, fundamentos débiles
+   - Pros: Evita postulación fallida
+   - Contras: Volver a desarrollar
+
+#### Decisión Tomada
+**Selección:** [POSTULAR/ITERAR/VALIDAR ANTES/NO APROBAR]
+
+**Justificación:**
+[Por qué esta recomendación basada en el análisis de 13 dimensiones]
+
+#### Fortalezas
+- [Fortaleza 1 - dimensión más alta]
+- [Fortaleza 2 - segunda dimensión más alta]
+
+#### Debilidades
+- [Debilidad 1 - dimensión más baja]
+- [Debilidad 2 - segunda dimensión más baja]
+
+#### Supuestos Clave
+- [Supuesto financiero clave]
+- [Supuesto de mercado clave]
+- [Supuesto técnico clave]
+
+#### Impacto
+- Score final determina postulabilidad a fondos
+- Identifica gaps para próximos 3-6 meses
+- Define tipo de financiamiento más adecuado
+
+#### Estado
+- [ ] Implementada
+- [x] Pendiente
+- [ ] Revertida
+
+#### Si score < 70:
+**Mejoras prioritarias:**
+1. [Mejora 1 en dimensión X] - Impacto: +X puntos estimado
+2. [Mejora 2 en dimensión Y] - Impacto: +Y puntos estimado
+
+**Proyectado post-mejora:** Y/100
+
+#### Próximo paso
+- [ ] Si score ≥85 → Generar documento final
+- [ ] Si score 70-84 → Iterar detalles menores
+- [ ] Si score 55-69 → Mejoras significativas y re-evaluar
+- [ ] Si score <55 → Revisar fundamentos o pivotear
+
+---
+```
+
+## Implementation Notes
+
+**Core Features:**
+- 13-dimension scoring system (0-100)
+- Risk modifier from RISK_REGISTER.md
+- Blocking condition if RISK_REGISTER missing
+- Threshold classifications (≥85 Excellent, 70-84 Good, etc.)
+- Strength/weakness identification
+- Investor-specific evaluation mode
+
+**Risk Modifier Integration:**
+- Automatically reads RISK_REGISTER.md
+- Extracts high-severity risk count
+- Applies penalty: -10 for 3+ high risks, -5 for 1-2 high risks
+- Final score = Base score + Risk modifier
+
+**Output Requirements:**
+- All 13 dimensions scored with justification
+- Weighted score calculation
+- Top 3 strengths and weaknesses
+- Actionable recommendations

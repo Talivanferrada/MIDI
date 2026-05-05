@@ -433,10 +433,18 @@ Opciones:
 4. **Funding Mismatch:** "Busco fondos CORFO" + "No tengo empresa"
    → Alert: CORFO requiere persona jurídica
 
-## Current Implementation Status
-- [x] Interview questions defined (all 26)
-- [x] Output format specified
-- [x] Validation rules documented
-- [x] Gate behavior specified
-- [ ] CLI integration (Phase 3)
-- [ ] Interactive questionnaire (Phase 3)
+## Implementation Notes
+
+**Core Features:**
+- 26 base interview questions across 7 sections
+- Dynamic follow-up questions for specific sectors
+- Pre-output validation with mandatory fields check
+- Context quality scoring (minimum 70% required)
+
+**Sector-Specific Follow-ups:**
+- Health, Education, Food, Tourism, Finance, Digital platforms
+- Budget constraints, Funding interest
+
+**Output Validation:**
+- Mandatory fields: idea, country, target audience, budget, objective, risk level
+- Recommended fields: region, skills, resources, constraints

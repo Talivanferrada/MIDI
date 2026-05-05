@@ -285,10 +285,36 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para
 
 Desarrollado por el equipo de MIDI Framework.
 
+## Documentación
+
+### 📚 Documentación en Español
+
+| Documento | Descripción |
+|-----------|-------------|
+| [🚀 Guía Rápida](./docs/es/QUICKSTART.md) | Comienza en 5 minutos |
+| [📖 Manual de Uso](./docs/es/MANUAL_DE_USO.md) | Guía completa del framework |
+| [🤖 Guía de Agentes](./docs/es/AGENTES.md) | Todos los agentes explicados |
+| [💰 Calculadoras Financieras](./docs/es/CALCULADORAS.md) | Referencia de funciones |
+| [📊 Visualizaciones](./docs/es/VISUALIZACION.md) | Sistema de gráficos |
+
+### Tests
+
+```bash
+npm test           # Ejecutar todos los tests
+npm run test:watch # Modo watch
+```
+
+**143 tests passing** - Cobertura completa de:
+- Módulo de visualización
+- Calculadoras financieras
+- Sistema de scoring
+- Canvas builder
+- CLI y workflows
+
 ## Soporte
 
 - **Issues**: [GitHub Issues](https://github.com/Talivanferrada/MIDI/issues)
-- **Documentación**: `.midi/docs/` después de inicializar
+- **Documentación**: Ver `docs/es/` para guías completas
 
 ---
 

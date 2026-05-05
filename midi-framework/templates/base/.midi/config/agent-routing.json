@@ -1,28 +1,463 @@
 {
-  "workflows": {
-    "exploration": [
-      "intake",
-      "global-research",
-      "local-adaptation",
-      "benchmark",
-      "insight",
-      "creative",
-      "hybridization"
-    ],
-    "financeable": [
-      "market",
-      "business-model",
-      "technical",
-      "financial",
-      "legal-tax",
-      "risk",
-      "validation",
-      "funding-match"
-    ]
+  "modes": {
+    "exploration": {
+      "sequence": [
+        "intake",
+        "global-research",
+        "local-adaptation",
+        "benchmark",
+        "insight",
+        "creative",
+        "hybridization",
+        "evaluator"
+      ],
+      "required_outputs": [
+        "USER_CONTEXT.md",
+        "global_research.md",
+        "local_adaptation.md",
+        "benchmark.md",
+        "insights.md",
+        "IDEA_BACKLOG.md",
+        "TOP3_IDEAS.md"
+      ],
+      "human_gates": [
+        {
+          "id": "gate_context",
+          "after": "intake",
+          "question": "¿El contexto capturado es suficiente para continuar?",
+          "options": ["continuar", "agregar_info", "guardar_despues"]
+        },
+        {
+          "id": "gate_top3",
+          "after": "evaluator",
+          "question": "¿Cuál idea deseas desarrollar?",
+          "options": ["idea_1", "idea_2", "idea_3", "mas_ideas", "fusionar"]
+        }
+      ],
+      "completion_criteria": {
+        "min_ideas": 10,
+        "top3_selected": true,
+        "all_research_complete": true
+      }
+    },
+    "financeable": {
+      "sequence": [
+        "market",
+        "business-model",
+        "technical",
+        "financial",
+        "legal-tax",
+        "risk",
+        "devil-advocate",
+        "validation",
+        "funding-match",
+        "evaluator",
+        "application-optimizer",
+        "writer"
+      ],
+      "required_outputs": [
+        "market_analysis.md",
+        "bmc.md",
+        "lean_canvas.md",
+        "technical_analysis.md",
+        "financial_analysis.md",
+        "legal_tax_analysis.md",
+        "RISK_REGISTER.md",
+        "devil_report.md",
+        "validation_plan.md",
+        "evaluator_scorecard.md",
+        "FINAL_PROJECT_DOCUMENT.md"
+      ],
+      "human_gates": [
+        {
+          "id": "gate_devil",
+          "after": "devil-advocate",
+          "question": "Has revisado el reporte del abogado del diablo. ¿Continuar?",
+          "options": ["continuar", "iterar", "volver_exploracion"]
+        },
+        {
+          "id": "gate_evaluation",
+          "after": "evaluator",
+          "question": "El puntaje de evaluación está listo. ¿Qué deseas hacer?",
+          "options": ["aprobar", "iterar", "continuar_bajo"],
+          "condition": "score < 70"
+        }
+      ],
+      "blocking_conditions": [
+        "devil_advocate_not_run",
+        "no_financial_analysis",
+        "no_evaluation",
+        "evaluation_below_70_without_override",
+        "no_idea_selected"
+      ],
+      "optional_agents": [
+        {
+          "agent": "legal-tax",
+          "trigger": "permits_or_company_or_health_or_food_or_data_or_tourism_or_finance"
+        },
+        {
+          "agent": "funding-match",
+          "trigger": "funding_focus_true"
+        },
+        {
+          "agent": "application-optimizer",
+          "trigger": "funding_focus_true"
+        }
+      ]
+    }
   },
-  "required_for_final": [
-    "devil-advocate",
-    "evaluator"
-  ],
-  "platform_specific": {}
+  "activation_rules": {
+    "intake": {
+      "trigger": "no_user_context",
+      "priority": 1,
+      "required": true,
+      "blocking": true,
+      "description": "Captures user context and creates USER_CONTEXT.md"
+    },
+    "global-research": {
+      "trigger": "no_global_research",
+      "priority": 2,
+      "required": true,
+      "blocking": false,
+      "description": "Researches international trends and references"
+    },
+    "local-adaptation": {
+      "trigger": "no_local_adaptation",
+      "priority": 3,
+      "required": true,
+      "blocking": false,
+      "description": "Adapts findings to Chilean context"
+    },
+    "benchmark": {
+      "trigger": "no_benchmark",
+      "priority": 4,
+      "required": true,
+      "blocking": false,
+      "description": "Analyzes competitors and substitutes"
+    },
+    "insight": {
+      "trigger": "no_insights",
+      "priority": 5,
+      "required": true,
+      "blocking": false,
+      "description": "Transforms research into opportunities"
+    },
+    "creative": {
+      "trigger": "insufficient_ideas",
+      "priority": 6,
+      "required": true,
+      "blocking": true,
+      "min_ideas": 10,
+      "description": "Generates 10-15 ideas using innovation frameworks"
+    },
+    "hybridization": {
+      "trigger": "ideas_need_fusion",
+      "priority": 7,
+      "required": false,
+      "description": "Fuses ideas according to combination rules"
+    },
+    "market": {
+      "trigger": "idea_selected",
+      "priority": 1,
+      "mode": "financeable",
+      "required": true,
+      "description": "Analyzes market segments and sizing"
+    },
+    "business-model": {
+      "trigger": "market_analysis_complete",
+      "priority": 2,
+      "mode": "financeable",
+      "required": true,
+      "description": "Creates BMC and Lean Canvas"
+    },
+    "technical": {
+      "trigger": "idea_selected",
+      "priority": 3,
+      "mode": "financeable",
+      "required": true,
+      "description": "Analyzes technical feasibility"
+    },
+    "financial": {
+      "trigger": "business_model_complete",
+      "priority": 4,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "description": "Creates financial projections with assumptions marked"
+    },
+    "legal-tax": {
+      "trigger": "permits_or_company_or_health_or_food_or_data_or_tourism_or_finance",
+      "priority": 5,
+      "mode": "financeable",
+      "required": "conditional",
+      "conditions": [
+        "permits_required",
+        "company_formation",
+        "health_sector",
+        "food_sector",
+        "data_handling",
+        "tourism_sector",
+        "finance_sector"
+      ],
+      "description": "Analyzes legal and tax implications"
+    },
+    "risk": {
+      "trigger": "idea_selected",
+      "priority": 6,
+      "mode": "financeable",
+      "required": true,
+      "description": "Creates risk register and mitigation strategies"
+    },
+    "devil-advocate": {
+      "trigger": "all_analysis_complete",
+      "priority": 7,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "mandatory_message": "CRITICAL: This agent is MANDATORY before any project can be declared viable or financeable",
+      "description": "Destructive critique of the project"
+    },
+    "validation": {
+      "trigger": "idea_selected",
+      "priority": 8,
+      "mode": "financeable",
+      "required": true,
+      "description": "Designs Lean validation experiments"
+    },
+    "funding-match": {
+      "trigger": "funding_focus_true",
+      "priority": 9,
+      "mode": "financeable",
+      "required": "conditional",
+      "condition": "funding_focus === true",
+      "description": "Identifies Chile-specific funding opportunities"
+    },
+    "evaluator": {
+      "trigger": "all_analysis_complete",
+      "priority": 10,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "description": "Scores project 0-100 using rubric"
+    },
+    "application-optimizer": {
+      "trigger": "funding_focus_true",
+      "priority": 11,
+      "mode": "financeable",
+      "required": "conditional",
+      "condition": "funding_focus === true",
+      "description": "Strengthens narrative for applications"
+    },
+    "writer": {
+      "trigger": "all_requirements_met",
+      "priority": 12,
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "prerequisites": [
+        "devil_advocate_run",
+        "evaluation_complete",
+        "all_analysis_files_exist"
+      ],
+      "description": "Consolidates all artifacts into final document"
+    }
+  },
+  "return_rules": {
+    "innovative_but_not_executable": {
+      "return_to": "hybridization",
+      "reason": "Fuse innovative idea with practical/executable idea",
+      "message": "La idea es innovadora pero tiene baja ejecutabilidad. Se recomienda hibridar con una idea más práctica."
+    },
+    "profitable_but_not_innovative": {
+      "return_to": "creative",
+      "reason": "Improve differentiation and innovation",
+      "message": "La idea es rentable pero poco innovadora. Se recomienda volver a creative-agent para mejorar diferenciación."
+    },
+    "postulable_but_weak_commercial": {
+      "return_to": "business-model",
+      "reason": "Strengthen revenue model and commercial viability",
+      "message": "La idea es postulable pero tiene débil modelo comercial. Se recomienda revisar business-model-agent."
+    },
+    "legal_risk_high": {
+      "return_to": "legal-tax",
+      "reason": "Resolve legal issues before proceeding",
+      "message": "Se detectó alto riesgo legal. Es OBLIGATORIO resolver con legal-tax-agent antes de continuar."
+    },
+    "validation_low": {
+      "return_to": "validation",
+      "reason": "Design validation experiments to de-risk hypothesis",
+      "message": "Las hipótesis tienen baja validación. Se recomienda diseñar experimentos con validation-agent."
+    },
+    "narrative_weak": {
+      "return_to": "application-optimizer",
+      "reason": "Strengthen story and pitch",
+      "message": "La narrativa es débil. Se recomienda fortalecer con application-optimizer-agent."
+    },
+    "evaluation_below_70": {
+      "return_to": "depends_on_weaknesses",
+      "reason": "Iterate based on evaluation feedback",
+      "message": "El puntaje de evaluación es bajo (< 70). Se recomienda iterar según las debilidades identificadas.",
+      "options": [
+        "Iterar según recomendaciones",
+        "Continuar con puntaje bajo (documentar decisión)",
+        "Volver a modo exploración"
+      ]
+    },
+    "devil_advocate_descartar": {
+      "return_to": "exploration",
+      "reason": "Devil advocate recommends discarding idea",
+      "message": "El abogado del diablo recomienda DESCARTAR la idea. Puedes: seleccionar otra del Top 3, o volver a exploración."
+    }
+  },
+  "blocking_rules": {
+    "final_document": {
+      "description": "Cannot generate FINAL_PROJECT_DOCUMENT.md without these conditions",
+      "requirements": [
+        {
+          "check": "devil_advocate_run",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "06_devil_advocate/devil_report.md" },
+              { "file_min_lines": 100, "file": "06_devil_advocate/devil_report.md" },
+              { "file_contains": "CONTINUAR|ITERAR|FUSIONAR|PAUSAR|DESCARTAR", "file": "06_devil_advocate/devil_report.md" }
+            ]
+          },
+          "error": "❌ BLOCKED: Devil advocate analysis is MANDATORY. File must exist, have 100+ lines, and include verdict."
+        },
+        {
+          "check": "financial_analysis_exists",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "05_analysis/financial_analysis.md" },
+              { "file_min_lines": 150, "file": "05_analysis/financial_analysis.md" },
+              { "file_contains": "SUPUESTO", "file": "05_analysis/financial_analysis.md", "min_count": 3 }
+            ]
+          },
+          "error": "❌ BLOCKED: Financial analysis is MANDATORY and must mark assumptions as [SUPUESTO]"
+        },
+        {
+          "check": "evaluation_complete",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "12_evaluation/evaluator_scorecard.md" },
+              { "file_min_lines": 80, "file": "12_evaluation/evaluator_scorecard.md" },
+              { "file_contains_pattern": "Puntaje total|Total Score", "file": "12_evaluation/evaluator_scorecard.md" }
+            ]
+          },
+          "error": "❌ BLOCKED: Project evaluation (evaluator_scorecard.md) is MANDATORY with 80+ lines and total score"
+        },
+        {
+          "check": "evaluation_above_70_or_override",
+          "validate": {
+            "type": "state_field_range_or_override",
+            "field": "evaluation_score",
+            "min": 70,
+            "override_field": "user_override_low_score"
+          },
+          "error": "❌ BLOCKED: Evaluation score below 70 requires iteration or explicit user override in PROJECT_STATE.md"
+        },
+        {
+          "check": "idea_selected",
+          "validate": {
+            "type": "state_field",
+            "field": "idea_selected",
+            "value": true
+          },
+          "error": "❌ BLOCKED: No idea has been selected for development. Select from TOP3_IDEAS.md"
+        },
+        {
+          "check": "legal_analysis_if_required",
+          "validate": {
+            "type": "conditional",
+            "condition": "sector in ['health', 'food', 'finance', 'tourism', 'education'] OR permits_required OR company_formation",
+            "then": {
+              "file_exists": "09_technical_financial_legal/legal_tax_analysis.md",
+              "file_min_lines": 100
+            }
+          },
+          "error": "❌ BLOCKED: Legal/tax analysis is REQUIRED for this sector (health, food, finance, tourism, education)"
+        },
+        {
+          "check": "market_analysis_complete",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "05_analysis/market_analysis.md" },
+              { "file_min_lines": 80, "file": "05_analysis/market_analysis.md" }
+            ]
+          },
+          "error": "❌ BLOCKED: Market analysis is MANDATORY with 80+ lines"
+        },
+        {
+          "check": "business_model_complete",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "08_canvas/business_model_canvas.md" },
+              { "file_min_lines": 50, "file": "08_canvas/business_model_canvas.md" }
+            ]
+          },
+          "error": "❌ BLOCKED: Business Model Canvas is MANDATORY"
+        }
+      ]
+    },
+    "financeable_mode": {
+      "description": "Cannot enter financeable mode without these conditions",
+      "requirements": [
+        {
+          "check": "idea_selected",
+          "validate": {
+            "type": "state_field",
+            "field": "idea_selected",
+            "value": true
+          },
+          "error": "❌ BLOCKED: Must select an idea from TOP3_IDEAS.md before entering financeable mode"
+        },
+        {
+          "check": "user_context_complete",
+          "validate": {
+            "type": "composite",
+            "conditions": [
+              { "file_exists": "USER_CONTEXT.md" },
+              { "file_min_lines": 30, "file": "USER_CONTEXT.md" }
+            ]
+          },
+          "error": "❌ BLOCKED: User context (USER_CONTEXT.md) must be complete with 30+ lines"
+        }
+      ]
+    }
+  },
+  "file_quality_requirements": {
+    "description": "Minimum quality requirements for each file type",
+    "requirements": {
+      "intake_output": { "min_lines": 30, "required_sections": ["Contexto", "Recursos", "Objetivos"] },
+      "research_output": { "min_lines": 80, "required_sections": ["Tendencias", "Referentes"] },
+      "analysis_output": { "min_lines": 100, "required_sections": ["Análisis", "Conclusiones"] },
+      "financial_output": { "min_lines": 150, "required_sections": ["Inversión", "Costos", "Ingresos"], "required_markers": ["SUPUESTO"] },
+      "devil_report": { "min_lines": 100, "required_sections": ["Crítica", "Veredicto"], "required_patterns": ["CONTINUAR|ITERAR|FUSIONAR|PAUSAR|DESCARTAR"] },
+      "evaluation_output": { "min_lines": 80, "required_sections": ["Puntaje", "Recomendación"] },
+      "final_document": { "min_lines": 500, "required_sections": ["Resumen Ejecutivo", "Supuestos"] }
+    }
+  },
+  "platform_specific": {
+    "opencode": {
+      "config_format": "yaml",
+      "state_file": ".midi/state.yaml"
+    },
+    "claude-code": {
+      "config_format": "md",
+      "state_file": "PROJECT_STATE.md"
+    },
+    "cursor": {
+      "config_format": "json",
+      "state_file": ".midi/state.json"
+    },
+    "generic": {
+      "config_format": "md",
+      "state_file": "PROJECT_STATE.md"
+    }
+  }
 }

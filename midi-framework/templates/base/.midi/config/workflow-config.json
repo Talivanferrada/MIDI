@@ -1,0 +1,173 @@
+{
+  "version": "1.0.0",
+  "workflows": {
+    "full-midi": {
+      "name": "Full MIDI",
+      "description": "Complete workflow: Exploration + Financeable mode",
+      "file": "full-midi.workflow.md",
+      "stages": ["intake", "research", "top3", "financeable", "devil-advocate", "evaluation", "final"]
+    },
+    "exploration": {
+      "name": "Exploration Mode",
+      "description": "Generate and evaluate multiple ideas",
+      "file": "exploration.workflow.md",
+      "stages": ["intake", "research", "top3"]
+    },
+    "financeable": {
+      "name": "Financeable Mode",
+      "description": "Deep analysis and validation of selected idea",
+      "file": "financeable.workflow.md",
+      "stages": ["financeable", "devil-advocate", "evaluation", "final"]
+    }
+  },
+  "stages": {
+    "intake": {
+      "name": "Intake",
+      "command": "/midi-start",
+      "description": "Initialize project and capture user context",
+      "mode": "exploration",
+      "required": true,
+      "outputs": ["USER_CONTEXT.md", "midi-project/ASSUMPTIONS.md"]
+    },
+    "research": {
+      "name": "Research",
+      "command": "/midi-explore",
+      "description": "Global research, local adaptation, and benchmarking",
+      "mode": "exploration",
+      "required": true,
+      "outputs": ["global_research.md", "local_adaptation.md", "benchmark.md", "insights.md"]
+    },
+    "top3": {
+      "name": "Top 3 Selection",
+      "command": "/midi-top3",
+      "description": "Generate ideas, score them, and select top 3",
+      "mode": "exploration",
+      "required": true,
+      "outputs": ["IDEA_BACKLOG.md", "TOP3_IDEAS.md"]
+    },
+    "financeable": {
+      "name": "Financeable Transition",
+      "command": "/midi-financeable",
+      "description": "Transition selected idea to financeable mode",
+      "mode": "financeable",
+      "required": true,
+      "outputs": []
+    },
+    "devil-advocate": {
+      "name": "Devil's Advocate",
+      "command": "/midi-devil",
+      "description": "Destructive critique of the project",
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "outputs": ["devil_report.md"]
+    },
+    "canvas": {
+      "name": "Business Canvas",
+      "command": "/midi-canvas",
+      "description": "Generate Business Model Canvas and Lean Canvas",
+      "mode": "financeable",
+      "required": false,
+      "outputs": ["business_model_canvas.md", "lean_canvas.md"]
+    },
+    "evaluation": {
+      "name": "Evaluation",
+      "command": "/midi-evaluate",
+      "description": "Score project 0-100 using rubric",
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "outputs": ["evaluator_scorecard.md"]
+    },
+    "final": {
+      "name": "Final Document",
+      "command": "/midi-final",
+      "description": "Generate consolidated final document",
+      "mode": "financeable",
+      "required": true,
+      "blocking": true,
+      "outputs": ["FINAL_PROJECT_DOCUMENT.md"]
+    }
+  },
+  "gates": {
+    "gate_context": {
+      "after": "intake",
+      "question": "¿El contexto capturado es suficiente para continuar?",
+      "options": ["continuar", "agregar_info", "guardar_despues"],
+      "autoApprove": false
+    },
+    "gate_research": {
+      "after": "research",
+      "question": "¿Hay suficiente información para idear?",
+      "options": ["continuar", "ampliar_investigacion"],
+      "autoApprove": false
+    },
+    "gate_top3": {
+      "after": "top3",
+      "question": "¿Cuál idea deseas desarrollar?",
+      "options": ["idea_1", "idea_2", "idea_3", "mas_ideas", "fusionar"],
+      "autoApprove": false
+    },
+    "gate_devil": {
+      "after": "devil-advocate",
+      "question": "Has revisado el reporte del abogado del diablo. ¿Continuar?",
+      "options": ["continuar", "iterar", "volver_exploracion"],
+      "autoApprove": false
+    },
+    "gate_evaluation": {
+      "after": "evaluation",
+      "question": "El puntaje de evaluación está listo. ¿Qué deseas hacer?",
+      "options": ["aprobar", "iterar", "continuar_bajo"],
+      "condition": "score < 70",
+      "autoApprove": true,
+      "autoApproveCondition": "score >= 70"
+    }
+  },
+  "fileQualityRequirements": {
+    "intake_output": {
+      "minLines": 30,
+      "requiredSections": ["Contexto", "Recursos", "Objetivos"]
+    },
+    "research_output": {
+      "minLines": 80,
+      "requiredSections": ["Tendencias", "Referentes"]
+    },
+    "analysis_output": {
+      "minLines": 100,
+      "requiredSections": ["Análisis", "Conclusiones"]
+    },
+    "financial_output": {
+      "minLines": 150,
+      "requiredSections": ["Inversión", "Costos", "Ingresos"],
+      "requiredMarkers": ["SUPUESTO"]
+    },
+    "devil_report": {
+      "minLines": 100,
+      "requiredSections": ["Crítica", "Veredicto"],
+      "requiredPatterns": ["CONTINUAR|ITERAR|FUSIONAR|PAUSAR|DESCARTAR"]
+    },
+    "evaluation_output": {
+      "minLines": 80,
+      "requiredSections": ["Puntaje", "Recomendación"]
+    },
+    "final_document": {
+      "minLines": 500,
+      "requiredSections": ["Resumen Ejecutivo", "Supuestos"]
+    }
+  },
+  "blockingConditions": {
+    "final_document": [
+      "devil_advocate_completed",
+      "evaluation_completed",
+      "evaluation_score_above_70_or_override",
+      "idea_selected",
+      "financial_analysis_exists",
+      "market_analysis_exists"
+    ],
+    "financeable_mode": [
+      "idea_selected",
+      "user_context_complete"
+    ]
+  },
+  "defaultWorkflow": "full-midi"
+}

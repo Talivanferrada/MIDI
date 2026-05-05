@@ -1,0 +1,169 @@
+# Investor Due Diligence Feature Summary
+
+**Phase:** Enhancement
+**Plan:** investor-due-diligence
+**Date:** 2026-05-02
+**Duration:** 135 seconds
+
+---
+
+## Objective
+Add investor-focused due diligence checklist to make MIDI more useful for fundraising.
+
+---
+
+## Tasks Completed
+
+### Task 1: Create due diligence template ✅
+**File:** `midi-framework/templates/base/.midi/templates/due-diligence-checklist.md`
+
+Created comprehensive checklist with:
+- **72 items** across 6 categories
+- **Team due diligence** (15 items): Founder CVs, vesting, equity structure
+- **Product & Technology** (15 items): PMF validation, tech stack, IP protection
+- **Market & Competition** (12 items): TAM/SAM/SOM, competitive analysis, CAC/LTV
+- **Financials** (12 items): Financial statements, burn rate, runway, projections
+- **Legal & Compliance** (12 items): Corporate structure, contracts, regulatory
+- **Deal Terms** (6 items): Valuation, use of funds, exit strategy
+
+**Special features:**
+- Red flag warnings per category
+- Data room checklist with 14 required documents
+- Final verification section with approve/conditional/reject decision
+- Scoring table (minimum 80% for investment)
+
+### Task 2: Add investor evaluation to evaluator agent ✅
+**File:** `midi-framework/templates/base/.midi/agents/midi-evaluator-agent.md`
+
+Added **Investor-Specific Evaluation** section:
+- New dimension: **Invertibilidad** (15% weight when seeking_investment=true)
+- Five evaluation criteria:
+  - Equipo (Team experience and complementarity)
+  - Traction (Real validation metrics)
+  - Market timing
+  - Competitive moat
+  - Exit potential
+- **Investor Readiness Checklist** with 7 critical items
+- Automatic warning when checklist < 80% complete
+
+### Task 3: Update financeable workflow ✅
+**File:** `midi-framework/templates/base/.midi/workflows/financeable.workflow.md`
+
+Added **Stage 18: Due Diligence Preparation**:
+- Generate due diligence checklist
+- Identify required documents
+- Flag missing items
+- Prepare data room structure
+- Calculate investor readiness score
+
+Updated:
+- Files generated table (added 2 new outputs)
+- Success criteria (added 2 new checks)
+- Workflow now has 19 stages (was 18)
+
+---
+
+## Files Created/Modified
+
+| File | Status | Lines |
+|------|--------|-------|
+| `.midi/templates/due-diligence-checklist.md` | Created | 272 |
+| `.midi/agents/midi-evaluator-agent.md` | Modified | +34 |
+| `.midi/workflows/financeable.workflow.md` | Modified | +25 |
+
+---
+
+## Key Features
+
+### 1. Red Flag Detection
+Each category includes specific warning signs:
+- ⚠️ Fundador sin vesting
+- ⚠️ Sin validación de clientes reales
+- ⚠️ TAM sobreestimado sin fuentes
+- ⚠️ CAC > LTV
+- ⚠️ Runway < 6 meses sin funding seguro
+- ⚠️ Litigios no revelados
+
+### 2. Scoring System
+```
+| Category    | Items | Weight |
+|-------------|-------|--------|
+| Team        | 15    | 20.8%  |
+| Product     | 15    | 20.8%  |
+| Market      | 12    | 16.7%  |
+| Financials  | 12    | 16.7%  |
+| Legal       | 12    | 16.7%  |
+| Deal Terms  | 6     | 8.3%   |
+| TOTAL       | 72    | 100%   |
+```
+
+### 3. Data Room Requirements
+14 essential documents for investment closure:
+- Corporate documents (escritura, certificado de vigencia)
+- Financial documents (estados financieros, declaraciones)
+- Team documents (CVs, contratos key employees)
+- IP documents (patentes, marcas)
+- Business documents (pitch deck, proyecciones)
+
+### 4. Investor Readiness Validation
+Automatic checks before pitching:
+- Due diligence checklist > 80% complete
+- Data room populated
+- Financial projections with pessimistic scenario
+- Clear use of funds
+- Defined milestones for next round
+- Team vesting in place
+- IP protected
+
+---
+
+## Commit
+
+**Hash:** `3e66c68`
+**Message:** `feat(investor-dd): add comprehensive due diligence checklist`
+
+---
+
+## Verification Results
+
+✅ Due diligence template exists (5.2K file)
+✅ Evaluator agent has investor dimension (20 lines added)
+✅ Workflow includes Stage 18 for due diligence
+✅ All files committed successfully
+
+---
+
+## Impact
+
+### For Founders
+- Clear roadmap of what investors expect
+- Self-assessment tool before fundraising
+- Professional documentation structure
+- Risk mitigation through early identification of gaps
+
+### For Investors
+- Standardized due diligence process
+- Clear red flag indicators
+- Objective scoring system
+- Comprehensive data room requirements
+
+### For MIDI Framework
+- Enhanced value proposition for fundraising users
+- Professional-grade investor preparation
+- Aligns with real-world VC processes
+- Differentiates from generic business planning tools
+
+---
+
+## Self-Check: PASSED
+
+- [x] Due diligence template created and verified
+- [x] Evaluator agent updated with investor dimension
+- [x] Workflow updated with due diligence stage
+- [x] All changes committed
+- [x] Files verified to exist
+- [x] Content verified via grep
+
+---
+
+*Generated by MIDI Framework Enhancement*

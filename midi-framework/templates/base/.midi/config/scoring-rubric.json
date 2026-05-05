@@ -1,38 +1,426 @@
 {
-  "dimensions": {
-    "innovation": {
-      "weight": 15,
-      "description": "Nivel de innovación y diferenciación"
+  "idea_exploration_score": {
+    "description": "Scoring system for selecting top 3 ideas from exploration phase",
+    "passing_threshold": 60,
+    "max_score": 100,
+    "dimensions": {
+      "innovacion": {
+        "weight": 20,
+        "description": "Nivel de innovación y diferenciación de la idea",
+        "criteria": {
+          "90-100": "Disruptivo, cambia paradigmas, crea nuevo mercado",
+          "70-89": "Significativamente diferente, mejora sustancial existente",
+          "50-69": "Moderadamente innovador, mejoras incrementales",
+          "30-49": "Poca innovación, similar a existentes",
+          "0-29": "Sin innovación, copia directa de existentes"
+        },
+        "questions": [
+          "¿Qué hace única esta idea?",
+          "¿Cómo se diferencia de lo que ya existe?",
+          "¿Crea un nuevo mercado o categoría?"
+        ]
+      },
+      "interes_usuario": {
+        "weight": 15,
+        "description": "Alineación con intereses, motivaciones y objetivos del usuario",
+        "criteria": {
+          "90-100": "Perfecta alineación con motivaciones profundas del usuario",
+          "70-89": "Buena alineación, el usuario se siente conectado",
+          "50-69": "Alineación moderada, requiere esfuerzo del usuario",
+          "30-49": "Poca alineación con intereses reales",
+          "0-29": "No alinea con lo que el usuario busca"
+        },
+        "questions": [
+          "¿Se alinea con las motivaciones del usuario?",
+          "¿El usuario se entusiasma con esta idea?",
+          "¿Coincide con el nivel de riesgo aceptado?"
+        ]
+      },
+      "facilidad_validacion": {
+        "weight": 10,
+        "description": "Qué tan rápido y económico es validar la idea",
+        "criteria": {
+          "90-100": "Se puede validar en días con poco presupuesto",
+          "70-89": "Validación posible en semanas con recursos moderados",
+          "50-69": "Requiere meses o inversión significativa para validar",
+          "30-49": "Validación compleja, requiere desarrollo previo",
+          "0-29": "Muy difícil de validar sin ejecución completa"
+        },
+        "questions": [
+          "¿Cómo se puede validar esta idea?",
+          "¿Cuánto tiempo/money requiere la validación?",
+          "¿Existe un MVP concierge posible?"
+        ]
+      },
+      "potencial_comercial": {
+        "weight": 20,
+        "description": "Capacidad de generar ingresos y ser rentable",
+        "criteria": {
+          "90-100": "Alto potencial de ingresos, modelo claro y escalable",
+          "70-89": "Buen potencial comercial con modelo definido",
+          "50-69": "Potencial moderado, modelo requiere definición",
+          "30-49": "Potencial comercial bajo o incierto",
+          "0-29": "Sin claro potencial comercial"
+        },
+        "questions": [
+          "¿Cómo gana dinero esta idea?",
+          "¿El mercado está dispuesto a pagar?",
+          "¿El modelo es escalable?"
+        ]
+      },
+      "adaptabilidad_local": {
+        "weight": 10,
+        "description": "Facilidad de adaptación al contexto chileno/regional",
+        "criteria": {
+          "90-100": "Se adapta perfectamente al contexto local",
+          "70-89": "Buena adaptabilidad con ajustes menores",
+          "50-69": "Requiere adaptaciones significativas",
+          "30-49": "Difícil adaptación al contexto local",
+          "0-29": "No es viable en el contexto local"
+        },
+        "questions": [
+          "¿Funciona en Chile?",
+          "¿Qué barreras locales existen?",
+          "¿Hay proveedores/infraestructura necesaria?"
+        ]
+      },
+      "diferenciacion": {
+        "weight": 15,
+        "description": "Claridad de la propuesta de valor única",
+        "criteria": {
+          "90-100": "Propuesta de valor claramente diferenciada e irreproducible",
+          "70-89": "Buena diferenciación con ventaja defendible",
+          "50-69": "Diferenciación moderada, puede ser copiada",
+          "30-49": "Poca diferenciación, competencia puede replicar fácilmente",
+          "0-29": "Sin diferenciación clara"
+        },
+        "questions": [
+          "¿Por qué elegirían esto sobre la competencia?",
+          "¿Qué ventaja es difícil de copiar?",
+          "¿Hay 'unfair advantage'?"
+        ]
+      },
+      "alineacion_recursos": {
+        "weight": 10,
+        "description": "Fit con recursos, habilidades y red del usuario",
+        "criteria": {
+          "90-100": "Perfecto fit, usuario tiene todos los recursos necesarios",
+          "70-89": "Buen fit, usuario tiene la mayoría de recursos",
+          "50-69": "Fit moderado, requerirá recursos adicionales",
+          "30-49": "Poco fit, usuario carece de recursos clave",
+          "0-29": "Sin fit, usuario no tiene recursos para ejecutar"
+        },
+        "questions": [
+          "¿El usuario tiene las habilidades necesarias?",
+          "¿Dispone del presupuesto requerido?",
+          "¿Tiene la red de contactos relevante?"
+        ]
+      }
     },
-    "market": {
-      "weight": 15,
-      "description": "Tamaño y potencial del mercado"
+    "scoring_formula": {
+      "total_score": "Σ(dimension_score × dimension_weight)",
+      "note": "All dimensions score 0-100, weighted sum produces final 0-100"
     },
-    "scalability": {
-      "weight": 10,
-      "description": "Capacidad de escalar"
-    },
-    "feasibility": {
-      "weight": 15,
-      "description": "Factibilidad técnica y operacional"
-    },
-    "financials": {
-      "weight": 15,
-      "description": "Viabilidad financiera"
-    },
-    "legal": {
-      "weight": 10,
-      "description": "Cumplimiento legal y tributario"
-    },
-    "narrative": {
-      "weight": 10,
-      "description": "Calidad de la narrativa"
-    },
-    "postulability": {
-      "weight": 10,
-      "description": "Capacidad de postular a fondos"
+    "recommendation_rules": {
+      "≥85": "EXCELENTE - Fuerte candidata para Top 3",
+      "70-84": "BUENA - Considerar para Top 3 con reservas menores",
+      "55-69": "REGULAR - Podría mejorar con iteración",
+      "40-54": "DÉBIL - Requiere mejoras significativas antes de considerar",
+      "<40": "NO RECOMENDADA - Descartar o reformular completamente"
     }
   },
-  "passing_score": 70,
-  "evaluation_notes": ""
+  "financeable_project_score": {
+    "description": "Scoring system for final project evaluation (jury/investor simulation)",
+    "passing_threshold": 70,
+    "excellent_threshold": 85,
+    "max_score": 100,
+    "dimensions": {
+      "problema": {
+        "weight": 8,
+        "description": "Claridad y relevancia del problema que resuelve",
+        "criteria": {
+          "90-100": "Problema crítico, bien definido, con evidencia de dolor real",
+          "70-89": "Problema claro e importante para el segmento",
+          "50-69": "Problema moderado, podría no ser prioritario",
+          "30-49": "Problema débil o mal definido",
+          "0-29": "Sin problema claro identificado"
+        },
+        "evaluation_questions": [
+          "¿El problema es real y comprobado?",
+          "¿Es suficientemente doloroso para que paguen por solución?",
+          "¿Está bien definido el segmento que lo sufre?"
+        ]
+      },
+      "solucion": {
+        "weight": 8,
+        "description": "Calidad y pertinencia de la solución propuesta",
+        "criteria": {
+          "90-100": "Solución elegantemente simple que resuelve el problema",
+          "70-89": "Buena solución, resuelve el problema efectivamente",
+          "50-69": "Solución parcial o con limitaciones significativas",
+          "30-49": "Solución débil, no resuelve el problema completamente",
+          "0-29": "Solución no resuelve el problema identificado"
+        },
+        "evaluation_questions": [
+          "¿La solución resuelve realmente el problema?",
+          "¿Es la mejor solución disponible?",
+          "¿Es simple de entender y usar?"
+        ]
+      },
+      "innovacion": {
+        "weight": 10,
+        "description": "Nivel de innovación y diferenciación",
+        "criteria": {
+          "90-100": "Innovación disruptiva, crea nueva categoría",
+          "70-89": "Innovación significativa con ventaja defendible",
+          "50-69": "Innovación incremental, mejoras sobre existentes",
+          "30-49": "Poca innovación, similar a competidores",
+          "0-29": "Sin innovación, commodity o copia"
+        },
+        "evaluation_questions": [
+          "¿Qué hace innovador este proyecto?",
+          "¿La innovación es defendible?",
+          "¿Crea ventaja competitiva sostenible?"
+        ]
+      },
+      "mercado": {
+        "weight": 10,
+        "description": "Tamaño y características del mercado objetivo",
+        "criteria": {
+          "90-100": "Mercado grande, en crecimiento, bien segmentado",
+          "70-89": "Mercado atractivo con buen tamaño y crecimiento",
+          "50-69": "Mercado moderado o con incertidumbre",
+          "30-49": "Mercado pequeño o en declive",
+          "0-29": "Sin mercado claro identificado"
+        },
+        "evaluation_questions": [
+          "¿El TAM/SAM/SOM está bien definido?",
+          "¿El mercado está creciendo?",
+          "¿El segmento es accesible?"
+        ]
+      },
+      "modelo_de_negocio": {
+        "weight": 10,
+        "description": "Claridad y viabilidad del modelo de ingresos",
+        "criteria": {
+          "90-100": "Modelo de negocio probado, escalable, con unit economics claro",
+          "70-89": "Modelo sólido con camino a rentabilidad",
+          "50-69": "Modelo definido pero con incertidumbre",
+          "30-49": "Modelo débil o poco claro",
+          "0-29": "Sin modelo de negocio definido"
+        },
+        "evaluation_questions": [
+          "¿Cómo gana dinero el proyecto?",
+          "¿El modelo es escalable?",
+          "¿Los unit economics son favorables?"
+        ]
+      },
+      "factibilidad_tecnica": {
+        "weight": 8,
+        "description": "Viabilidad técnica de implementación",
+        "criteria": {
+          "90-100": "Técnicamente simple con tecnología probada",
+          "70-89": "Técnicamente viable con esfuerzos moderados",
+          "50-69": "Complejidad técnica manejable con riesgos",
+          "30-49": "Alta complejidad técnica con incertidumbre",
+          "0-29": "Técnicamente inviable o extremadamente complejo"
+        },
+        "evaluation_questions": [
+          "¿Es técnicamente posible con recursos disponibles?",
+          "¿Qué dependencias tecnológicas existen?",
+          "¿Cuál es el riesgo técnico?"
+        ]
+      },
+      "factibilidad_financiera": {
+        "weight": 12,
+        "description": "Viabilidad financiera y retorno de inversión",
+        "criteria": {
+          "90-100": "Excelente retorno, bajo tiempo de recuperación, supuestos bien fundamentados",
+          "70-89": "Buen potencial financiero con supuestos razonables",
+          "50-69": "Viabilidad financiera moderada con incertidumbre",
+          "30-49": "Proyecciones débiles o muy optimistas",
+          "0-29": "Inviable financieramente o supuestos irreales"
+        },
+        "evaluation_questions": [
+          "¿Los supuestos financieros son realistas?",
+          "¿Cuál es el punto de equilibrio?",
+          "¿Están los supuestos marcados como tales?"
+        ]
+      },
+      "legal_tributario": {
+        "weight": 8,
+        "description": "Cumplimiento legal y optimización tributaria",
+        "criteria": {
+          "90-100": "Sin riesgos legales, estructura óptima definida",
+          "70-89": "Riesgos legales menores con mitigación clara",
+          "50-69": "Algunos riesgos legales que requieren atención",
+          "30-49": "Riesgos legales significativos",
+          "0-29": "Riesgos legales críticos o no evaluado cuando corresponde"
+        },
+        "evaluation_questions": [
+          "¿Se identificaron los requisitos legales?",
+          "¿Hay riesgos legales significativos?",
+          "¿Se recomendó estructura tributaria óptima?"
+        ]
+      },
+      "impacto": {
+        "weight": 6,
+        "description": "Impacto social, ambiental o económico positivo",
+        "criteria": {
+          "90-100": "Impacto transformador y medible",
+          "70-89": "Impacto positivo significativo",
+          "50-69": "Impacto moderado",
+          "30-49": "Impacto menor",
+          "0-29": "Sin impacto positivo identificado"
+        },
+        "evaluation_questions": [
+          "¿Qué impacto positivo genera?",
+          "¿Cómo se medirá el impacto?",
+          "¿Alinea con algún ODS?"
+        ]
+      },
+      "escalabilidad": {
+        "weight": 6,
+        "description": "Capacidad de crecer sin perder eficiencia",
+        "criteria": {
+          "90-100": "Altamente escalable, costos decrecen con volumen",
+          "70-89": "Buena escalabilidad con inversiones moderadas",
+          "50-69": "Escalabilidad limitada por estructura de costos",
+          "30-49": "Difícil de escalar",
+          "0-29": "No escalable"
+        },
+        "evaluation_questions": [
+          "¿Puede crecer sin aumentar costos proporcionalmente?",
+          "¿Cuáles son los limitantes de escala?",
+          "¿El modelo permite expansión geográfica?"
+        ]
+      },
+      "equipo_encaje": {
+        "weight": 5,
+        "description": "Fit entre las habilidades del equipo y lo que requiere el proyecto",
+        "criteria": {
+          "90-100": "Equipo con todas las habilidades y experiencia necesarias",
+          "70-89": "Equipo competente con algunas habilidades a desarrollar",
+          "50-69": "Equipo con gaps importantes pero recuperables",
+          "30-49": "Equipo con gaps críticos",
+          "0-29": "Equipo no tiene las habilidades necesarias"
+        },
+        "evaluation_questions": [
+          "¿El equipo tiene las habilidades requeridas?",
+          "¿Hay dependencia excesiva del fundador?",
+          "¿Qué habilidades faltan?"
+        ]
+      },
+      "narrativa": {
+        "weight": 5,
+        "description": "Calidad de la historia y comunicación del proyecto",
+        "criteria": {
+          "90-100": "Narrativa compelling, clara y memorable",
+          "70-89": "Buena narrativa que conecta emocionalmente",
+          "50-69": "Narrativa funcional pero sin impacto emocional",
+          "30-49": "Narrativa confusa o débil",
+          "0-29": "Sin narrativa clara"
+        },
+        "evaluation_questions": [
+          "¿Se entiende la historia en 30 segundos?",
+          "¿Conecta emocionalmente con la audiencia?",
+          "¿Hay un pitch claro?"
+        ]
+      },
+      "postulabilidad": {
+        "weight": 4,
+        "description": "Capacidad de postular a fondos y programas",
+        "criteria": {
+          "90-100": "Cumple requisitos de múltiples fondos relevantes",
+          "70-89": "Cumple requisitos de al menos un fondo importante",
+          "50-69": "Potencialmente postulable con ajustes",
+          "30-49": "Difícil de postular a fondos existentes",
+          "0-29": "No aplica a fondos disponibles"
+        },
+        "evaluation_questions": [
+          "¿A qué fondos puede postular?",
+          "¿Cumple los criterios de elegibilidad?",
+          "¿Está listo para postular?"
+        ]
+      }
+    },
+    "risk_modifier": {
+      "weight": 0,
+      "description": "Modifier based on overall risk level (affects total score, not a dimension)",
+      "application": {
+        "bajo": "No modification",
+        "medio": "-5 points to total score",
+        "alto": "-10 points to total score"
+      },
+      "note": "Risk is evaluated by risk-agent and applied as modifier, not as scored dimension"
+    },
+    "scoring_formula": {
+      "base_score": "Σ(dimension_score × dimension_weight)",
+      "final_score": "base_score - risk_modifier",
+      "note": "All dimensions score 0-100, weighted sum produces base score, risk modifies final"
+    },
+    "thresholds": {
+      "≥85": {
+        "classification": "EXCELENTE",
+        "recommendation": "Listo para postular/ejecutar. Proyecto fuerte con alta probabilidad de éxito.",
+        "action": "Proceder a aplicación o ejecución"
+      },
+      "70-84": {
+        "classification": "BUENO",
+        "recommendation": "Proyecto sólido con áreas de mejora menores. Iterar detalles antes de postular/ejecutar.",
+        "action": "Iterar menores detalles y proceder"
+      },
+      "55-69": {
+        "classification": "REGULAR",
+        "recommendation": "Proyecto con debilidades significativas. Requiere mejoras antes de ser financeable.",
+        "action": "Iterar según recomendaciones específicas"
+      },
+      "40-54": {
+        "classification": "DÉBIL",
+        "recommendation": "Proyecto con problemas serios. Volver a análisis profundo o considerar pivot.",
+        "action": "Revisar fundamentos, posible pivot"
+      },
+      "<40": {
+        "classification": "NO VIABLE",
+        "recommendation": "Proyecto no viable en estado actual. Considerar descartar o reformular completamente.",
+        "action": "Descartar o reformular desde cero"
+      }
+    },
+    "mandatory_checks": {
+      "devil_advocate_run": {
+        "required": true,
+        "error": "Cannot complete evaluation without devil advocate analysis"
+      },
+      "financial_assumptions_marked": {
+        "required": true,
+        "error": "All financial projections must mark assumptions clearly"
+      },
+      "legal_analysis_when_required": {
+        "required": "conditional",
+        "error": "Legal/tax analysis required for this sector"
+      }
+    }
+  },
+  "evaluation_process": {
+    "step_1": "Score each dimension independently (0-100)",
+    "step_2": "Apply weights to calculate weighted score",
+    "step_3": "Apply risk modifier if applicable",
+    "step_4": "Determine classification from thresholds",
+    "step_5": "Generate recommendations based on weakest dimensions",
+    "step_6": "Document evaluation in evaluator_scorecard.md"
+  },
+  "output_format": {
+    "evaluator_scorecard": {
+      "sections": [
+        "puntaje_total",
+        "puntaje_por_dimension",
+        "fortalezas",
+        "debilidades",
+        "riesgos_altos",
+        "mejoras_recomendadas",
+        "recomendacion_final",
+        "proximo_paso"
+      ]
+    }
+  }
 }
