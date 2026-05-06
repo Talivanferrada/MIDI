@@ -638,3 +638,240 @@ const canRun = await validator.canRunStage('financial_analysis');
 ---
 
 *Guía generada para MIDI Framework v0.1.0*
+
+---
+
+## 🆕 Nuevos Agentes v0.2.0
+
+### midi-territorial-research-agent
+
+**Fase:** 1.1 - Investigación Territorial
+
+**Rol:** Analiza el territorio geográfico donde se implementará el proyecto.
+
+**Análisis que realiza:**
+- **Geográfico físico:** Ubicación, clima, estacionalidad, accesibilidad, riesgos naturales
+- **Socioeconómico:** Población, demografía, actividades económicas, brechas locales
+- **Mapa de actores:** Actores públicos (municipalidades, servicios públicos, CORFO, SERCOTEC), privados (empresas, gremios, cámaras), comunitarios (juntas de vecinos, organizaciones)
+- **Competencia:** Proyectos similares en el territorio, emprendimientos, proyectos fallidos
+- **Marco regulatorio:** Normativas municipales, permisos requeridos, plan regulador
+- **Oportunidades y desafíos:** Ventajas competitivas, recursos subutilizados, limitaciones
+
+**Output:** `11_territorial_analysis.md` (mínimo 150 líneas)
+
+**Guardrails:**
+- ✅ Basar análisis en datos públicos verificables
+- ✅ Citar fuentes cuando sea posible
+- ❌ No inventar datos demográficos o económicos
+- ❌ No asumir que territorio es igual a otros
+
+---
+
+### midi-innovation-methodology-agent
+
+**Fase:** 1.2 - Metodologías de Innovación
+
+**Rol:** Aplica metodologías de innovación estructuradas para generar insights.
+
+**Metodologías implementadas (10):**
+
+1. **Design Thinking**
+   - Empatizar: Mapa de empatía, puntos de dolor, ganancias
+   - Definir: POV (Point of View), preguntas "How Might We"
+   - Idear: Brainstorming, Worst Possible Idea, analogías
+   - Prototipar: Concepto de MVP
+
+2. **Jobs To Be Done (JTBD)**
+   - Job Stories: Cuando... Quiero... Para poder...
+   - Competidores a despedir
+   - Oportunidades JTBD
+
+3. **Blue Ocean Strategy**
+   - Canvas de estrategia
+   - Acciones: Eliminar, Reducir, Aumentar, Crear
+   - Espacio de mercado nuevo
+
+4. **SCAMPER**
+   - Sustituir, Combinar, Adaptar, Modificar, Otro uso, Eliminar, Reorganizar
+
+5. **Análisis PESTEL**
+   - Político, Económico, Social, Tecnológico, Ecológico, Legal
+
+6. **Análisis FODA**
+   - Fortalezas, Oportunidades, Debilidades, Amenazas
+   - Estrategias FO, FA, DO, DA
+
+7. **Árbol de Problemas**
+   - Problema central
+   - Causas directas e indirectas
+   - Efectos directos e indirectos
+
+8. **Árbol de Objetivos**
+   - Objetivo central (propósito)
+   - Objetivos específicos (medios)
+   - Actividades
+
+9. **Teoría de Cambio**
+   - Impacto a largo plazo
+   - Outcomes (resultados intermedios)
+   - Outputs (entregables)
+   - Actividades
+   - Insumos/recursos
+   - Supuestos críticos
+
+10. **Lean Startup**
+    - Hipótesis de valor y crecimiento
+    - MVP (Minimum Viable Product)
+    - Métricas AARRR (Adquisición, Activación, Retención, Referencia, Ingresos)
+    - Build-Measure-Learn Cycle
+
+**Lógica de selección automática:**
+```
+IF problema_no_claro → Design Thinking
+IF necesidad_diferenciación → Blue Ocean + SCAMPER
+IF fondo_social → Árbol de Problemas + Teoría de Cambio
+IF startup_comercial → Lean Startup + JTBD
+IF análisis_entorno → PESTEL + FODA
+```
+
+**Output:** `13_innovation_insights.md`
+
+**Guardrails:**
+- ✅ Seleccionar metodologías relevantes según contexto
+- ✅ Aplicar metodologías de forma completa
+- ❌ No aplicar todas las metodologías sin criterio
+- ❌ No generar insights genéricos sin conexión al contexto
+
+---
+
+### midi-prioritizer-agent
+
+**Fase:** 1.4 - Priorización de Ideas
+
+**Rol:** Evalúa y prioriza ideas usando matriz multi-criterio.
+
+**Criterios de evaluación (14 dimensiones):**
+
+| Criterio | Peso Base | Descripción |
+|----------|-----------|-------------|
+| Impacto | 15% | Potencial de cambio positivo |
+| Factibilidad Técnica | 10% | ¿Se puede implementar con tecnología disponible? |
+| Factibilidad Económica | 10% | ¿Es viable financieramente? |
+| Deseabilidad Usuario | 12% | ¿Qué tan fuerte es la necesidad? |
+| Alineación Territorial | 8% | ¿Calza con oportunidades del territorio? |
+| Alineación Fondo | 10% | ¿Calza con objetivos del fondo? |
+| Innovación | 8% | ¿Qué tan novedosa es? |
+| Sostenibilidad | 7% | ¿Puede mantenerse sin financiamiento continuo? |
+| Escalabilidad | 5% | ¿Puede crecer/replicarse? |
+| Riesgo | 5% | Nivel de riesgo (invertido) |
+| Tiempo Implementación | 5% | ¿Se puede implementar en el plazo? |
+| Uso Presupuesto | 3% | ¿Aprovecha eficientemente el presupuesto? |
+| Evidencia Disponible | 5% | ¿Hay datos que respalden viabilidad? |
+| Diferenciación | 7% | ¿Se diferencia de soluciones existentes? |
+
+**Ajuste de pesos según contexto:**
+
+- **Fondo concursable público:**
+  - ↑ Alineación Fondo (10% → 20%)
+  - ↑ Impacto Social
+  - ↓ Escalabilidad (si fondo es local)
+
+- **Inversión privada:**
+  - ↑ Factibilidad Económica (10% → 15%)
+  - ↑ Escalabilidad (5% → 10%)
+  - ↑ Diferenciación (7% → 12%)
+
+- **Proyecto social:**
+  - ↑ Impacto Social (15% → 20%)
+  - ↑ Sostenibilidad (7% → 12%)
+  - ↓ Innovación (si es mejora incremental)
+
+- **Startup comercial:**
+  - ↑ Factibilidad Económica (10% → 15%)
+  - ↑ Deseabilidad Usuario (12% → 18%)
+  - ↑ Diferenciación (7% → 12%)
+
+**Output:** `15_idea_ranking.md`, `15_TOP3_IDEAS.md`
+
+**Guardrails:**
+- ✅ Justificar cada puntaje con evidencia
+- ✅ Explicar por qué se descartan ideas
+- ✅ Considerar contexto específico del usuario
+- ❌ No rankear sin justificación
+- ❌ No usar pesos estáticos sin ajuste
+
+---
+
+### midi-case-research-agent
+
+**Fase:** 2.2 - Investigación de Casos
+
+**Rol:** Busca experiencias similares al proyecto para aprender de éxitos y fracasos.
+
+**Categorías de casos (8):**
+
+1. **Casos de Éxito**
+   - Proyectos similares exitosos
+   - Emprendimientos que resolvieron el mismo problema
+   - Iniciativas que funcionaron en territorios parecidos
+   - Información: Nombre, ubicación, año, modelo, financiamiento, resultados, factores de éxito, lecciones
+
+2. **Casos de Fracaso**
+   - Proyectos similares que fallaron
+   - Startups que cerraron en el mismo sector
+   - Razón del fracaso, errores, qué podrían haber hecho diferente
+
+3. **Proyectos Financiados Anteriormente**
+   - Ganadores de la misma convocatoria (si hay fondo objetivo)
+   - Montos otorgados, duración, resultados reportados
+
+4. **Pilotos y Prototipos**
+   - MVPs que validaron hipótesis similar
+   - Qué probaron, cómo, resultados, costo, tiempo
+
+5. **Papers e Investigación**
+   - Papers académicos sobre el problema
+   - Estudios de impacto
+   - Hallazgos relevantes
+
+6. **Notas de Prensa**
+   - Cobertura mediática
+   - Reportajes
+   - Artículos de expertos
+
+7. **Bases de Datos Públicas**
+   - Chile: CORFO, SERCOTEC, FIA, SII, INE
+   - Internacional: Crunchbase, CB Insights, Product Hunt
+
+8. **Programas Anteriores**
+   - Resultados de programas similares
+   - Evaluaciones de impacto
+   - Lecciones oficiales
+
+**Análisis de patrones:**
+- Qué funciona (características comunes de éxitos)
+- Qué falla (características comunes de fracasos)
+- Factores diferenciadores
+- Recomendaciones basadas en evidencia
+
+**Output:** `33_case_research.md`
+
+**Guardrails:**
+- ✅ Proporcionar links a fuentes
+- ✅ Distinguir entre éxito y fracaso
+- ✅ Identificar patrones, no solo casos aislados
+- ❌ No inventar casos
+- ❌ No generalizar de un solo caso
+
+**Fuentes Chile específicas:**
+- CORFO: https://www.corfo.cl
+- SERCOTEC: https://www.sercotec.cl
+- FIA: https://www.fia.cl
+- Start-Up Chile: https://www.startupchile.org
+- INE: https://www.ine.cl
+
+---
+
+**Total agentes v0.2.0: 28**
+
+*Actualizado: 2026-05-05*
