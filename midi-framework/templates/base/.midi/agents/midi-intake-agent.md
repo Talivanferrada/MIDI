@@ -21,70 +21,359 @@ Antes de explorar ideas o analizar proyectos, el sistema debe entender el punto 
 
 ### Preguntas de Ruta (PRIORITARIAS - Preguntar PRIMERO)
 
-#### 0.1 ¿Qué busca el usuario?
-**PREGUNTA OBLIGATORIA:**
+#### 0.1 ¿Tienes una idea base que quieras desarrollar?
+**PREGUNTA INICIAL:**
 ```
-¿Qué deseas hacer hoy?
+¿Tienes una idea o proyecto que ya existe y quieres desarrollar?
 
-[ ] Explorar ideas desde cero
-[ ] Mejorar una idea existente
-[ ] Analizar un proyecto para financiamiento
-[ ] Postular a un fondo concursable específico
-[ ] Buscar financiamiento privado
-[ ] Crear un emprendimiento
-[ ] Resolver un problema territorial
-[ ] Diseñar un proyecto social/educativo/cultural/ambiental
-[ ] Otro: ____________
+[ ] Sí, tengo una idea que quiero desarrollar/mejorar
+[ ] No, quiero explorar ideas desde cero
+[ ] Tengo un problema, pero no tengo idea de solución
 ```
 
 **Acción según respuesta:**
-- "Explorar ideas desde cero" → RUTA: EXPLORACIÓN → Continuar a Fase 1
-- "Mejorar idea existente" → RUTA: EXPLORACIÓN (con idea base) → Continuar a Fase 1
-- "Analizar proyecto para financiamiento" → RUTA: ANÁLISIS → Preguntar tipo de financiamiento
-- "Postular a fondo concursable específico" → RUTA: ANÁLISIS (con fondo) → Preguntar nombre del fondo
-- "Buscar financiamiento privado" → RUTA: ANÁLISIS (privado) → Continuar a Fase 2
-- Otras opciones → Clarificar objetivo específico
+- "Sí, tengo una idea" → Capturar idea base → Preguntar qué quiere hacer con ella
+- "No, quiero explorar" → RUTA: EXPLORACIÓN ABIERTA → Continuar a 0.2
+- "Tengo un problema" → Capturar problema → Explorar soluciones en Fase 1
 
-#### 0.2 ¿En qué país, región, comuna o territorio se desarrollaría?
+---
+
+#### 0.1a Si TIENE IDEA BASE - Capturarla (NUEVO)
+
+**PREGUNTAS SOBRE LA IDEA BASE:**
+
+```markdown
+## Captura de Idea Base
+
+### 1. ¿Cuál es tu idea? (Descripción general)
+[Descripción de 3-5 oraciones de la idea]
+
+### 2. ¿Qué problema resuelve?
+[Problema específico que aborda]
+
+### 3. ¿A quién beneficia?
+[Beneficiarios directos: descripción del público]
+
+### 4. ¿En qué estado está?
+[ ] Solo una intuición/idea vaga
+[ ] Concepto definido pero no estructurado
+[ ] Ya investigué sobre el tema
+[ ] Tengo un prototipo/MVP
+[ ] Ya tiene validación con usuarios
+
+### 5. ¿Por qué te entusiasma esta idea?
+[Motivación personal]
+
+### 6. ¿Qué ya existe de esta idea?
+[ ] Nada, es solo una idea
+[ ] Tengo algunos recursos/equipos identificados
+[ ] Ya hay avances parciales
+[ ] Tengo contactos/aliados potenciales
+```
+
+**Output:** `IDEA_BASE.md` (guardar para usar en exploración)
+
+---
+
+#### 0.2 ¿Qué busca el usuario? (Adaptado si hay idea base)
+**PREGUNTA OBLIGATORIA:**
+```
+¿Qué deseas hacer?
+
+[SI NO HAY IDEA BASE:]
+  [ ] Explorar ideas desde cero
+  [ ] Tengo un problema, buscar soluciones
+  [ ] Buscar oportunidades en mi territorio
+
+[SI HAY IDEA BASE:]
+  [ ] Desarrollar mi idea para fondo concursable
+  [ ] Desarrollar mi idea para inversión privada
+  [ ] Validar y mejorar mi idea
+  [ ] Evaluar viabilidad de mi idea
+  [ ] Buscar financiamiento para mi proyecto
+  [ ] Postular a fondo específico (ya conozco cuál)
+```
+
+**Acción según respuesta:**
+
+| Respuesta | Ruta | Siguiente Paso |
+|-----------|------|----------------|
+| Explorar ideas desde cero | EXPLORACIÓN ABIERTA | Continuar a 0.3 |
+| Tengo un problema | EXPLORACIÓN CON PROBLEMA | Capturar problema, continuar |
+| Desarrollar idea para fondo | ANÁLISIS (con fondo) | **Ir a 0.5 - Análisis de Bases** |
+| Desarrollar idea para inversión | ANÁLISIS (privado) | Continuar a 0.3 |
+| Validar y mejorar idea | EXPLORACIÓN CON IDEA BASE | Usar idea base en exploración |
+| Evaluar viabilidad | ANÁLISIS | Continuar a 0.3 |
+| Buscar financiamiento | ANÁLISIS | Preguntar tipo financiamiento |
+| Postular a fondo específico | ANÁLISIS (con fondo) | **Ir a 0.5 - Análisis de Bases** |
+
+---
+
+#### 0.3 ¿En qué país, región, comuna o territorio se desarrollaría?
 **IMPORTANTE:** Esta información condiciona toda la exploración y análisis.
 
-#### 0.3 ¿Existe una convocatoria, fondo, programa, inversionista o marco de financiamiento ya definido?
-**Si la respuesta es SÍ, preguntar:**
-- ¿Cuál es el nombre del fondo/programa?
-- ¿Tienes el link oficial a las bases?
-- ¿Tienes el documento PDF de las bases?
-- ¿Cuál es el presupuesto máximo disponible?
-- ¿Cuál es la fecha de cierre de la convocatoria?
+**Capturar:**
+- País (default: Chile)
+- Región
+- Comuna/Ciudad específica
+- Si es local, nacional o internacional
 
-**⚠️ CRITICAL:**
-- Si el usuario tiene fondo específico → La exploración debe estar CONDICIONADA por las bases
-- Si NO hay bases oficiales → Marcar como [SIN BASES OFICIALES] y preguntar si quiere buscar fondos posibles
+---
 
-#### 0.4 ¿Hay un público objetivo definido?
-- [ ] Sí, está definido
-- [ ] Tengo una idea general
-- [ ] No, necesito explorarlo
+#### 0.4 ¿Existe una convocatoria, fondo o financiamiento ya definido?
+**PREGUNTA CLAVE:**
+```
+¿Ya tienes identificado el fondo o tipo de financiamiento?
 
-#### 0.5 ¿Hay una problemática concreta identificada?
-- [ ] Sí, está clara
-- [ ] Tengo una hipótesis
-- [ ] No, necesito descubrirla
+[ ] Sí, tengo un fondo concursable específico
+[ ] Tengo una idea del fondo, pero no estoy seguro
+[ ] Busco inversión privada (ángel, VC)
+[ ] Busco financiamiento bancario
+[ ] Será autofinanciado
+[ ] Aún no lo he definido
+```
 
-#### 0.6 ¿Hay un equipo, recursos previos, infraestructura o capacidades disponibles?
-- [ ] Sí, tengo equipo y recursos
-- [ ] Tengo algunos recursos
-- [ ] Partiría desde cero
+**SI respondió "Sí, tengo un fondo concursable específico":**
+→ **IR INMEDIATAMENTE A SECCIÓN 0.5 - ANÁLISIS DE BASES**
 
-#### 0.7 ¿Se busca impacto económico, social, ambiental, científico, educativo, cultural o mixto?
-- [ ] Económico (empleo, ingresos)
-- [ ] Social (comunidad, grupos vulnerables)
-- [ ] Ambiental (sostenibilidad)
-- [ ] Científico (investigación)
-- [ ] Educativo
-- [ ] Cultural
-- [ ] Mixto: [Especificar]
+**SI respondió "Tengo una idea del fondo":**
+→ Preguntar: "¿Qué fondos te interesan? (puedo ayudarte a elegir)"
+→ Luego ir a 0.5
 
-#### 0.8 Nivel de madurez de la idea:
+**SI respondió otro:**
+→ Continuar a 0.6
+
+---
+
+#### 0.5 ANÁLISIS DE BASES DE FONDO (NUEVO - CRÍTICO)
+
+**⚠️ ESTA SECCIÓN ES OBLIGATORIA si el usuario indicó fondo concursable**
+
+##### Paso 1: Solicitud de Bases
+```
+Para analizar el fondo y adaptar el proyecto a los requisitos, necesito las bases oficiales.
+
+¿Cómo puedes proporcionar las bases?
+
+[ ] Tengo el link oficial a las bases
+[ ] Tengo el PDF/documento de las bases
+[ ] No tengo las bases, pero sé el nombre del fondo
+[ ] No tengo las bases, ayúdame a buscarlas
+```
+
+**Capturar:**
+- Nombre del fondo
+- Institución (CORFO, SERCOTEC, FIA, GORE, etc.)
+- Link oficial o archivo
+- Año/convocatoria
+
+##### Paso 2: Análisis Automático de Bases
+
+**SI el usuario proporciona bases (link o PDF):**
+
+```markdown
+## Análisis de Bases - [Nombre del Fondo]
+
+### Información Extraída de las Bases
+
+#### A. Datos Generales
+- **Nombre del fondo:** [Extraído de bases]
+- **Institución:** [CORFO/SERCOTEC/FIA/etc.]
+- **Objetivo del fondo:** [Extraído de bases]
+- **Líneas financiables:** [Lista]
+- **Convocatoria vigente:** [Sí/No - Fecha]
+
+#### B. Montos y Duración
+- **Monto máximo por proyecto:** $[X]
+- **Monto mínimo (si existe):** $[Y]
+- **Duración máxima:** [Meses]
+- **Duración mínima (si existe):** [Meses]
+
+#### C. Beneficiarios Elegibles
+- **Tipo de entidad permitida:**
+  [ ] Persona natural
+  [ ] EIRL
+  [ ] SpA
+  [ ] Ltda
+  [ ] Fundaciones/ONGs
+  [ ] Cooperativas
+  [ ] Otros: [Lista]
+
+- **Tamaño de empresa (si aplica):** [Micro/Pequeña/Mediana]
+- **Antigüedad requerida:** [Años]
+- **Situación tributaria:** [Requisitos]
+
+#### D. Requisitos de Admisibilidad
+1. [Requisito 1 - citado de bases]
+2. [Requisito 2 - citado de bases]
+3. [Requisito 3 - citado de bases]
+
+#### E. Gastos Permitidos (CRÍTICO)
+| Categoría | ¿Permitido? | Límite/Porcentaje | Fuente en Bases |
+|-----------|-------------|-------------------|------------------|
+| Recursos Humanos | Sí/No | [%] | Página X |
+| Equipamiento | Sí/No | [%] | Página X |
+| Insumos/Materiales | Sí/No | [%] | Página X |
+| Servicios/Consultorías | Sí/No | [%] | Página X |
+| Viajes | Sí/No | [%] | Página X |
+| Capacitación | Sí/No | [%] | Página X |
+| Infraestructura | Sí/No | [%] | Página X |
+| Gastos Generales | Sí/No | [%] | Página X |
+| Imprevistos | Sí/No | [%] | Página X |
+| Marketing | Sí/No | [%] | Página X |
+
+#### F. Gastos NO Permitidos (CRÍTICO)
+1. [Gasto prohibido 1 - citado de bases]
+2. [Gasto prohibido 2 - citado de bases]
+
+#### G. Criterios de Evaluación
+| Criterio | Ponderación | Qué evalúa | Fuente |
+|----------|-------------|------------|--------|
+| [Criterio 1] | [%] | [Descripción] | Página X |
+| [Criterio 2] | [%] | [Descripción] | Página X |
+| **TOTAL** | **100%** | | |
+
+#### H. Documentos Requeridos
+1. [Documento 1 - citado de bases]
+2. [Documento 2 - citado de bases]
+
+#### I. Cofinanciamiento
+- **Porcentaje de cofinanciamiento:** [%]
+- **Tipo de aporte propio:** [Efectivo/Specie/Ambos]
+- **¿Tienes el aporte propio?:** [Verificar con usuario]
+
+#### J. Territorio Elegible
+- **Regiones elegibles:** [Lista o "Todas"]
+- **Comunas elegibles:** [Si aplica]
+- **Zonas prioritarias:** [Si aplica]
+
+#### K. Indicadores Esperados
+1. [Indicador 1 - extraído de bases]
+2. [Indicador 2 - extraído de bases]
+
+#### L. Plazos
+- **Fecha de cierre:** [Fecha]
+- **Días restantes:** [Número]
+- **Fecha inicio ejecución (si definida):** [Fecha]
+
+#### M. Condiciones de Rendición
+- [Condición 1]
+- [Condición 2]
+```
+
+##### Paso 3: Preguntas de Contexto ADAPTADAS según Bases
+
+**⚠️ IMPORTANTE: Usar las bases para formular las preguntas**
+
+```markdown
+## Contexto Adaptado según Bases de [Nombre del Fondo]
+
+### Basado en el análisis de las bases, necesito verificar:
+
+#### 1. Alineación con Objetivo del Fondo
+Las bases indican que el fondo busca: [Objetivo extraído]
+
+¿Tu idea/proyecto alinea con este objetivo?
+[ ] Sí, está directamente relacionado
+[ ] Parcialmente relacionado
+[ ] No estoy seguro, necesito adaptarlo
+
+#### 2. Verificación de Admisibilidad
+
+**Requisito:** [Requisito 1 de las bases]
+¿Tu entidad/persona cumple esto?
+[ ] Sí, cumple
+[ ] No cumple
+[ ] Necesito verificarlo
+
+**Requisito:** [Requisito 2 de las bases]
+¿Tu entidad/persona cumple esto?
+[ ] Sí, cumple
+[ ] No cumple
+[ ] Necesito verificarlo
+
+#### 3. Cofinanciamiento (si aplica)
+Las bases requieren [%] de cofinanciamiento.
+
+¿Tienes el aporte propio disponible?
+[ ] Sí, tengo el [X]% requerido
+[ ] Tengo parte
+[ ] No, necesito buscarlo
+
+#### 4. Territorio (si hay restricción)
+Las bases indican que solo pueden postular proyectos de: [Territorio]
+
+¿Tu proyecto se implementa en este territorio?
+[ ] Sí, está dentro del territorio elegible
+[ ] No, necesito ajustar el territorio
+[ ] Puedo ajustar el proyecto a otro territorio
+
+#### 5. Presupuesto
+El fondo tiene un máximo de $[X].
+
+¿Cuánto planeas solicitar?
+$[Monto] - [Justificación]
+
+¿Cómo optimizarías el uso del presupuesto máximo?
+[Estrategia de optimización]
+
+#### 6. Duración
+El fondo permite proyectos de hasta [X] meses.
+
+¿Tu proyecto cabe en este plazo?
+[ ] Sí, el proyecto dura menos
+[ ] Necesito ajustar el alcance
+[ ] Necesito información sobre duración típica
+
+#### 7. Impacto Esperado (según indicadores del fondo)
+El fondo evalúa: [Indicadores extraídos]
+
+¿Tu proyecto puede demostrar estos indicadores?
+[ ] Sí, están cubiertos
+[ ] Parcialmente cubiertos
+[ ] Necesito diseñar indicadores específicos
+```
+
+**Output del análisis de bases:**
+- `FUND_ANALYSIS.md` - Análisis completo de las bases
+- `ADMISSIBILITY_CHECKLIST.md` - Checklist de requisitos
+- Actualizar `DECISION_ROUTE.md` con restricciones del fondo
+
+---
+
+#### 0.6 Si NO hay fondo específico - Preguntas Generales
+
+**Preguntas de contexto sin adaptación:**
+
+##### Público Objetivo
+- ¿Hay un público objetivo definido?
+  - [ ] Sí, está definido
+  - [ ] Tengo una idea general
+  - [ ] No, necesito explorarlo
+
+##### Problemática
+- ¿Hay una problemática concreta identificada?
+  - [ ] Sí, está clara
+  - [ ] Tengo una hipótesis
+  - [ ] No, necesito descubrirla
+
+##### Recursos Disponibles
+- ¿Hay un equipo, recursos previos, infraestructura o capacidades disponibles?
+  - [ ] Sí, tengo equipo y recursos
+  - [ ] Tengo algunos recursos
+  - [ ] Partiría desde cero
+
+##### Tipo de Impacto
+- ¿Se busca impacto económico, social, ambiental, científico, educativo, cultural o mixto?
+  - [ ] Económico (empleo, ingresos)
+  - [ ] Social (comunidad, grupos vulnerables)
+  - [ ] Ambiental (sostenibilidad)
+  - [ ] Científico (investigación)
+  - [ ] Educativo
+  - [ ] Cultural
+  - [ ] Mixto: [Especificar]
+
+##### Nivel de Madurez (si no hay idea base)
 ```
 ¿En qué etapa está tu idea/proyecto?
 
@@ -113,41 +402,99 @@ Antes de explorar ideas o analizar proyectos, el sistema debe entender el punto 
 - **Ruta:** [EXPLORACIÓN / ANÁLISIS]
 - **Motivo:** [Por qué esta ruta]
 
+---
+
+## Idea Base (si existe)
+
+### ¿Tiene idea base?
+- **Tiene idea base:** [Sí/No]
+
+### Si SÍ - Idea Base Capturada
+- **Descripción:** [Descripción de la idea]
+- **Problema que resuelve:** [Problema]
+- **Beneficiarios:** [Público objetivo]
+- **Estado:** [Intuición/Concepto/Investigado/Prototipo/Validado]
+- **Motivación:** [Por qué le entusiasma]
+- **Recursos existentes:** [Qué ya tiene]
+
+### Archivo de idea base
+- **Guardado en:** `IDEA_BASE.md`
+
+---
+
 ## Nivel de Madurez
 - **Nivel:** [Cero idea / Idea inicial / Idea avanzada / Proyecto en formulación / Proyecto listo / Búsqueda de financiamiento]
 - **Acción:** [Qué hacer según nivel]
 
+---
+
 ## Fondo Concursable (si aplica)
+
+### Datos del Fondo
 - **Nombre del fondo:** [Nombre o "No definido"]
+- **Institución:** [CORFO/SERCOTEC/FIA/GORE/etc.]
 - **Link oficial:** [URL o "No disponible"]
 - **Bases disponibles:** [Sí/No/Pendiente]
-- **Presupuesto máximo:** $[X] o "No definido"
-- **Fecha de cierre:** [Fecha] o "No definida"
-- **Condiciona exploración:** [Sí/No]
+- **Convocatoria:** [Año/número]
+- **Fecha de cierre:** [Fecha]
+- **Días restantes:** [Número]
 
-## Tipo de Financiamiento Buscado
-- [ ] Fondo concursable público
-- [ ] Inversión privada (VC/Ángel)
-- [ ] Financiamiento bancario
-- [ ] Autofinanciamiento
-- [ ] Crowdfunding
-- [ ] Patrocinio/mecenazgo
-- [ ] Preventa/clientes
-- [ ] No definido aún
+### Presupuesto del Fondo
+- **Monto máximo:** $[X]
+- **Monto mínimo:** $[Y] (si existe)
+- **Cofinanciamiento requerido:** [%]
+- **Aporte propio disponible:** [Sí/No/Parcial]
 
-## Territorio de Implementación
-- **País:** [País]
-- **Región:** [Región]
-- **Comuna/Ciudad:** [Comuna]
-- **Alcance:** [Local/Nacional/Internacional]
+### Condicionamiento
+- **¿Condiciona exploración/análisis?:** [Sí/No]
+- **Razón:** [Por qué sí/no]
 
-## Tipo de Impacto Buscado
-- **Principal:** [Económico/Social/Ambiental/Científico/Educativo/Cultural/Mixto]
-- **Secundario:** [Si aplica]
+---
 
-## Público Objetivo Preliminar
-- **Estado:** [Definido/Idea general/No definido]
-- **Descripción:** [Si está definido]
+## Análisis de Bases (si se proporcionaron)
+
+### Requisitos de Admisibilidad
+| Requisito | ¿Cumple? | Acción si no |
+|-----------|----------|---------------|
+| [Requisito 1] | [Sí/No/Pendiente] | [Acción] |
+| [Requisito 2] | [Sí/No/Pendiente] | [Acción] |
+
+### Gastos Permitidos
+| Categoría | ¿Permitido? | Límite | Nota |
+|-----------|-------------|--------|------|
+| Recursos Humanos | Sí/No | [%] | [Nota] |
+| Equipamiento | Sí/No | [%] | [Nota] |
+| [Otras categorías] | ... | ... | ... |
+
+### Gastos NO Permitidos
+1. [Gasto prohibido 1]
+2. [Gasto prohibido 2]
+
+### Criterios de Evaluación
+| Criterio | Ponderación | Cobertura |
+|----------|-------------|-----------|
+| [Criterio 1] | [%] | [Alta/Media/Baja] |
+| [Criterio 2] | [%] | [Alta/Media/Baja] |
+
+### Territorio Elegible
+- **Regiones:** [Lista o "Todas"]
+- **¿Proyecto en territorio elegible?:** [Sí/No]
+
+### Indicadores Esperados
+1. [Indicador 1] - ¿Proyecto lo cubre?: [Sí/No]
+2. [Indicador 2] - ¿Proyecto lo cubre?: [Sí/No]
+
+### Alineación Preliminar
+- **Nivel de alineación:** [Alta/Media/Baja]
+- **Fortalezas:** [Lista]
+- **Brechas:** [Lista]
+- **Ajustes necesarios:** [Lista]
+
+### Archivo de análisis de bases
+- **Guardado en:** `FUND_ANALYSIS.md`
+- **Checklist en:** `ADMISSIBILITY_CHECKLIST.md`
+
+---
 
 ## Problemática Preliminar
 - **Estado:** [Clara/Hipótesis/No identificada]

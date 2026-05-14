@@ -9,10 +9,26 @@
 ## Ruta de Trabajo Decidida
 
 ### Ruta Principal
-**Ruta:** [EXPLORACIÓN / ANÁLISIS / COHESIÓN DIRECTA]
+**Ruta:** [EXPLORACIÓN ABIERTA / EXPLORACIÓN CON IDEA BASE / EXPLORACIÓN CON PROBLEMA / ANÁLISIS / ANÁLISIS CON FONDO / ANÁLISIS PRIVADO]
 
 ### Motivo de la Ruta
 [Por qué se seleccionó esta ruta basándose en las respuestas del usuario]
+
+---
+
+## Idea Base (si existe)
+
+### ¿Tiene idea base?
+- **Tiene idea base:** [Sí/No]
+
+### Si SÍ - Resumen de Idea Base
+- **Descripción:** [1-2 oraciones de la idea]
+- **Problema:** [Problema que resuelve]
+- **Estado:** [Intuición/Concepto/Investigado/Prototipo/Validado]
+
+### Archivo de idea base
+- **Guardado en:** `00_IDEA_BASE.md`
+- **Usar en exploración:** [Sí/No - cómo orientar la exploración]
 
 ---
 
@@ -26,20 +42,21 @@
 
 ## Fondo Concursable (si aplica)
 
-### Nombre del Fondo
-- **Nombre:** [Nombre específico o "No definido"]
-- **Institución:** [CORFO/SERCOTEC/FIA/otro]
+### Datos del Fondo
+- **Nombre del fondo:** [Nombre específico o "No definido"]
+- **Institución:** [CORFO/SERCOTEC/FIA/GORE/etc.]
 - **Convocatoria:** [Año/número]
 
 ### Bases
 - **Link oficial:** [URL o "No disponible"]
 - **PDF disponible:** [Sí/No/Pendiente de subir]
 - **Estado:** [Bases vigentes/Bases vencidas/Falta verificar]
+- **Bases analizadas:** [Sí/No/Pendiente]
 
-### Presupuesto
+### Presupuesto del Fondo
 - **Monto máximo:** $[X] o "No definido"
 - **Monto mínimo:** $[Y] o "No aplica"
-- **Cofinanciamiento:** [% requerido] o "No aplica"
+- **Cofinanciamiento requerido:** [%] o "No aplica"
 - **Aporte propio disponible:** [Sí/No/Parcial]
 
 ### Plazos
@@ -48,35 +65,72 @@
 - **Estado:** [Abierto/Cerrado/Por abrir]
 
 ### Condicionamiento
-- **¿Condiciona exploración?:** [Sí/No]
-- **Razón:** [Por qué sí o no]
+- **¿Condiciona exploración/análisis?:** [Sí/No]
+- **Razón:** [Por qué sí/no]
 
 ---
 
-## Tipo de Financiamiento Buscado
+## Análisis de Bases (si se proporcionaron)
 
-### Opción Seleccionada
-- [ ] Fondo concursable público
-- [ ] Inversión privada (VC, Ángel, Family Office)
-- [ ] Financiamiento bancario
-- [ ] Autofinanciamiento
-- [ ] Crowdfunding
-- [ ] Patrocinio/mecenazgo
-- [ ] Preventa/clientes
-- [ ] Mixto: [Especificar componentes]
-- [ ] No definido aún
+### Requisitos de Admisibilidad
+| Requisito | ¿Cumple? | Estado | Acción si no |
+|-----------|----------|--------|---------------|
+| [Requisito 1] | [Sí/No] | [Verificado/Pendiente] | [Acción] |
+| [Requisito 2] | [Sí/No] | [Verificado/Pendiente] | [Acción] |
+| [Requisito 3] | [Sí/No] | [Verificado/Pendiente] | [Acción] |
 
-**Tipo:** [TIPO SELECCIONADO]
+**Total requisitos cumplidos:** [X]/[Y]
+**Riesgo de inadmisibilidad:** [Bajo/Medio/Alto]
 
-### Justificación
-[Por qué este tipo de financiamiento es adecuado para el proyecto]
+### Gastos Permitidos (CRÍTICO)
+| Categoría | ¿Permitido? | Límite | Nota importante |
+|-----------|-------------|--------|-----------------|
+| Recursos Humanos | Sí/No | [% o monto] | [Nota específica] |
+| Equipamiento | Sí/No | [% o monto] | [Nota específica] |
+| Insumos/Materiales | Sí/No | [% o monto] | [Nota específica] |
+| Servicios/Consultorías | Sí/No | [% o monto] | [Nota específica] |
+| Viajes | Sí/No | [% o monto] | [Nota específica] |
+| Capacitación | Sí/No | [% o monto] | [Nota específica] |
+| Infraestructura | Sí/No | [% o monto] | [Nota específica] |
+| Gastos Generales | Sí/No | [% o monto] | [Nota específica] |
+| Imprevistos | Sí/No | [% o monto] | [Nota específica] |
+| Marketing | Sí/No | [% o monto] | [Nota específica] |
+
+### Gastos NO Permitidos (CRÍTICO - EVITAR)
+1. ❌ [Gasto prohibido 1 - citado de bases]
+2. ❌ [Gasto prohibido 2 - citado de bases]
+3. ❌ [Gasto prohibido 3 - citado de bases]
+
+### Criterios de Evaluación
+| Criterio | Ponderación | ¿Proyecto cubre? | Cobertura |
+|----------|-------------|------------------|-----------|
+| [Criterio 1] | [%] | [Sí/No/Parcial] | [Alta/Media/Baja] |
+| [Criterio 2] | [%] | [Sí/No/Parcial] | [Alta/Media/Baja] |
+| **TOTAL** | **100%** | | |
+
+### Territorio Elegible
+- **Regiones permitidas:** [Lista o "Todas"]
+- **Comunas específicas:** [Si aplica]
+- **¿Proyecto en territorio elegible?:** [Sí/No]
+- **Acción si no:** [Ajustar territorio/Buscar otro fondo]
+
+### Indicadores Esperados por el Fondo
+| Indicador | ¿Proyecto lo cubre? | Cómo medirlo |
+|-----------|---------------------|---------------|
+| [Indicador 1] | [Sí/No] | [Método] |
+| [Indicador 2] | [Sí/No] | [Método] |
+
+### Alineación Preliminar
+- **Nivel de alineación:** [Alta/Media/Baja]
+- **Fortalezas del proyecto:** [Lista]
+- **Brechas identificadas:** [Lista]
+- **Ajustes necesarios:** [Lista]
+
+### Archivos de análisis de bases
+- **Análisis completo:** `00_FUND_ANALYSIS.md`
+- **Checklist de admisibilidad:** `00_ADMISSIBILITY_CHECKLIST.md`
 
 ---
-
-## Territorio de Implementación
-
-### País
-- **País:** [País - Default: Chile]
 
 ### Región
 - **Región:** [Región específica]
