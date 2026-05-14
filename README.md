@@ -101,25 +101,61 @@ Transformar **intuiciones en proyectos validados** mediante un proceso sistemát
 - npm >= 8.x
 - Git
 
-### Instalación
+### Instalación Rápida (Recomendada)
+
+```bash
+# 1. Clonar repositorio
+git clone https://github.com/Talivanferrada/MIDI.git
+cd MIDI/midi-framework
+
+# 2. Ejecutar instalador automático
+./install.sh
+
+# ¡Listo! El instalador hace todo automáticamente:
+# - Instala dependencias
+# - Configura comando 'midi' global
+# - Muestra instrucciones de uso
+```
+
+### Instalación Manual
 
 ```bash
 # Clonar repositorio
 git clone https://github.com/Talivanferrada/MIDI.git
-cd MIDI
-
-# Ir al directorio del framework
-cd midi-framework
+cd MIDI/midi-framework
 
 # Instalar dependencias
 npm install
 
-# Instalar globalmente (opcional)
+# Instalar globalmente
 npm link
 
 # Verificar instalación
 midi doctor
 ```
+
+### Inicio Rápido
+
+```bash
+# Opción 1: Crear proyecto y ver instrucciones
+midi init mi-proyecto
+
+# Opción 2: Crear proyecto e iniciar workflow automáticamente
+midi init mi-proyecto --start
+
+# Opción 3: Setup completo en un comando
+midi setup --project-name mi-proyecto --start
+```
+
+### Solución de Problemas Comunes
+
+| Problema | Solución |
+|----------|----------|
+| `npm install` falla con ENOENT | Asegúrate de estar en `MIDI/midi-framework/` |
+| `midi: command not found` | Ejecuta `npm link` en el directorio `midi-framework` |
+| Error con prompts interactivos | Usa flags: `midi init --yes --project-name nombre` |
+| `node_modules` no encontrado | Ejecuta `./install.sh` para instalación automática |
+| Error en entorno no interactivo | Agrega `--non-interactive` a los comandos |
 
 ---
 
